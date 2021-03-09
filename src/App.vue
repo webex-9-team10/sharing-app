@@ -5,16 +5,21 @@
       <router-link to="/post">Post</router-link> |
       <router-link to="/show">Show</router-link>
     </div>
-    <router-view/>
+    <Map />
+    <router-view />
   </div>
 </template>
 
 <script>
+
+import Map from "./components/Map";
+
 export default {
   components: {
-    
-  }
-}
+    Map,
+  },
+};
+
 </script>
 
 <style>
