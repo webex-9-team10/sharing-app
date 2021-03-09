@@ -4,8 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/post">Post</router-link> |
       <router-link to="/show">Show</router-link>
-      <Map />
     </div>
+    <Map />
     <router-view />
   </div>
 </template>
@@ -14,8 +14,7 @@
 import Map from "./components/Map";
 
 export default {
-  name: "App",
-  component: {
+  components: {
     Map,
   },
 };
