@@ -4,10 +4,22 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/post">Post</router-link> |
       <router-link to="/show">Show</router-link>
+      <Map />
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<script>
+import Map from "./components/Map";
+
+export default {
+  name: "App",
+  component: {
+    Map,
+  },
+};
+</script>
 
 <style>
 #app {
