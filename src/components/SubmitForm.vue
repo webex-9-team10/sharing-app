@@ -10,9 +10,11 @@
         投稿
       </button>
     </div>
-    <p v-for="tweet in tweets" :key="tweet.id">
+    <div v-for="tweet in tweets" :key="tweet.id">
+        <div>
         {{ tweet.text }}
-      </p>
+        </div>
+    </div>
   </div>
 </template>
 
