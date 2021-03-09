@@ -18,9 +18,10 @@ const routes = [
     component: Post
   },
   {
-    path: '/show',
+    path: '/show/:postid',
     name: 'Show',
-    component: Show
+    component: Show,
+    props: route => ({ postid: String(route.params.postid) })
   },
 ]
 

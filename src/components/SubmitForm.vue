@@ -11,9 +11,9 @@
       </button>
     </div>
     <div v-for="tweet in tweets" :key="tweet.id">
-        <div>
-        {{ tweet.text }}
-        </div>
+        <router-link :to="{ name: 'Show', params: { postid : tweet.id  }}" >
+            {{ tweet.text }}
+        </router-link >
     </div>
   </div>
 </template>
