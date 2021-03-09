@@ -1,7 +1,10 @@
+
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import VueGeolocation from "vue-browser-geolocation";
+import "./firebase.js"
+
 
 Vue.config.productionTip = false;
 Vue.use(VueGeolocation);

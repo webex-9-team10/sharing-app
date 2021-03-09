@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 import Map from "./components/Map";
 
 export default {
@@ -18,6 +19,7 @@ export default {
     Map,
   },
 };
+
 </script>
 
 <style>

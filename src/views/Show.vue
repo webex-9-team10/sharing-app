@@ -1,16 +1,29 @@
 <template>
   <div id="show">
-    <h1>>ゆーとのページ</h1>
-    <div>投稿を表紙する</div>
+    <post-display />
+    <router-link :to="{ name: 'index-page' }"> back </router-link>
+    <div>
+      投稿の内容を表示するページです！ 投稿のIDは {{ $route.params.postid }} 
+    </div>
+    <div>
+      {{ postid }}
+    </div>
   </div>
 </template>
 
-<script>
-export default {
 
+<script>
+import PostDisplay from "../components/PostDisplay.vue"
+
+export default {
+  data:function(){
+    return{
+      post:{}
+    }
+  },
+  props: { postid: String },
+  components: { PostDisplay },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
