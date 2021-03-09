@@ -1,16 +1,15 @@
 <template>
   <div id="show">
-    <h1>>ゆーとのページ</h1>
-    <div>投稿を表紙する</div>
+    <post-display />
   </div>
 </template>
 
-<script>
-export default {
 
+<script>
+import PostDisplay from "../components/PostDisplay.vue"
+export default {
+  components: { PostDisplay },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
