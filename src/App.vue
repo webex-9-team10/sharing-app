@@ -5,22 +5,12 @@
       <router-link to="/post">Post</router-link> |
       <router-link to="/show">Show</router-link>
     </div>
-    <Map />
+
     <router-view />
   </div>
 </template>
 
-<script>
-
-import Map from "./components/Map";
-
-export default {
-  components: {
-    Map,
-  },
-};
-
-</script>
+<script></script>
 
 <style>
 #app {
