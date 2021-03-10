@@ -1,14 +1,17 @@
 <template>
   <div>
+    <!-- 座標の表示  -->
     <div
-      style="display:flex; align-items:center; justify-content:space-between"
+      style=" flex-direction:row; align-items:center; justify-content:space-between"
     >
       <div>
+        <!-- 現在地の座標表示 -->
         <h1>現在地:</h1>
         <p>
           {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
         </p>
         <div>
+          <!-- マップ上の座標表示 -->
           <h1>Map coordinates:</h1>
           <p>
             {{ mapCoordinates.lat }} Latitude,{{ mapCoordinates.lng }} Longitude
@@ -16,6 +19,7 @@
         </div>
       </div>
     </div>
+    <!-- google mapの表示 -->
     <GmapMap
       :center="myCoordinates"
       :zoom="zoom"
