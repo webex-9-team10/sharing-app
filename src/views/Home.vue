@@ -25,15 +25,16 @@
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
-      @dragend="handleDrag"
+      @click="getPosition(event)"
     >
-      <GmapMarker
-        :position="{ lat: 35.6471, lng: 139.7534 }"
+      <div v-for="marker in markers" :key="marker.id">
+        <GmapMarker
+        :position="{ lat: marker.position.lat, lng: marker.position.lng }"
         :clickable="true"
         :draggable="false"
       ></GmapMarker>
-      ></GmapMap
-    >
+      </div>
+    </GmapMap>
   </div>
 </template>
 
@@ -46,6 +47,20 @@ export default {
         lat: 0,
         lng: 0,
       },
+      markers:[
+        {
+          id:0,
+          position:{lat: 35.6471, lng: 139.5534},
+        },
+        {
+          id:1,
+          position:{lat: 35.5471, lng: 139.7534}
+        },
+        {
+          id:2,
+          position:{lat: 35.7471, lng: 139.7034}
+        },
+      ],
       zoom: 10,
     };
   },
@@ -82,6 +97,19 @@ export default {
       localStorage.center = JSON.stringify(center);
       localStorage.zoom = zoom;
     },
+    getPosition:function(event){    
+      // Map をクリックした時に何やら引数に値が渡されるらしいので event と名前をつけて受け取る 
+       if (event) {
+         this.markers.push({
+           id:this.markers.length,
+           position:{
+            // event.latLng で緯度経度とってこれることが console.log で試行錯誤してたらわかったので利用
+             lat:event.latLng.lat(),
+             lng:event.latLng.lng()
+           }
+         })
+      }
+    }
   },
   computed: {
     mapCoordinates() {
@@ -91,7 +119,6 @@ export default {
           lng: 0,
         };
       }
-
       return {
         lat: this.map
           .getCenter()
