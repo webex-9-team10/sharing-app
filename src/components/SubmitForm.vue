@@ -58,8 +58,8 @@ export default {
         genre:this.genre,
         title:this.title,
         text:this.text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         //position:{lat: this.lat, lng:this.lng},
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       }
       firebase.firestore().collection("tweets").add(item)
       this.tweets.length=0
