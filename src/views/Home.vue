@@ -19,14 +19,21 @@
         </div>
       </div>
     </div>
-    <!-- google mapの表示 -->
+    <!-- Google Mapの実装 -->
     <GmapMap
       :center="myCoordinates"
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
       @dragend="handleDrag"
-    ></GmapMap>
+    >
+      <GmapMarker
+        :position="{ lat: 35.6471, lng: 139.7534 }"
+        :clickable="true"
+        :draggable="false"
+      ></GmapMarker>
+      ></GmapMap
+    >
   </div>
 </template>
 
@@ -39,7 +46,7 @@ export default {
         lat: 0,
         lng: 0,
       },
-      zoom: 7,
+      zoom: 10,
     };
   },
   created() {
