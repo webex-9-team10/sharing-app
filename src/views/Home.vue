@@ -26,12 +26,15 @@
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
       @dragend="handleDrag"
+      @click="getPosition(event)"
     >
-      <GmapMarker
-        :position="{ lat: 35.6471, lng: 139.7534 }"
-        :clickable="true"
-        :draggable="false"
-      ></GmapMarker>
+      <div v-for="marker in markers" :key="marker.id">
+        <GmapMarker
+          :position="{ lat: marker.position.lat, lng: marker.position.lng }"
+          :clickable="true"
+          :draggable="false"
+        ></GmapMarker>
+      </div>
       ></GmapMap
     >
   </div>
@@ -46,6 +49,20 @@ export default {
         lat: 0,
         lng: 0,
       },
+      markers: [
+        {
+          id: 0,
+          position: { lat: 35.649, lng: 139.7433 },
+        },
+        {
+          id: 1,
+          position: { lat: 35.6577, lng: 139.702 },
+        },
+        {
+          id: 2,
+          position: { lat: 35.6589, lng: 139.7459 },
+        },
+      ],
       zoom: 10,
     };
   },
@@ -82,26 +99,33 @@ export default {
       localStorage.center = JSON.stringify(center);
       localStorage.zoom = zoom;
     },
-  },
-  computed: {
-    mapCoordinates() {
-      if (!this.map) {
-        return {
-          lat: 0,
-          lng: 0,
-        };
+    getPosition: function(event) {
+      if (event) {
+        this.markers.push({
+          id: this.markers.length,
+          position: { lat: event.lat, lng: event.lng },
+        });
       }
-
-      return {
-        lat: this.map
-          .getCenter()
-          .lat()
-          .toFixed(4),
-        lng: this.map
-          .getCenter()
-          .lng()
-          .toFixed(4),
-      };
+    },
+    computed: {
+      mapCoordinates() {
+        if (!this.map) {
+          return {
+            lat: 0,
+            lng: 0,
+          };
+        }
+        return {
+          lat: this.map
+            .getCenter()
+            .lat()
+            .toFixed(4),
+          lng: this.map
+            .getCenter()
+            .lng()
+            .toFixed(4),
+        };
+      },
     },
   },
 };
