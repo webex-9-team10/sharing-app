@@ -1,14 +1,17 @@
 <template>
   <div>
+    <!-- 座標の表示  -->
     <div
-      style="display:flex; align-items:center; justify-content:space-between"
+      style=" flex-direction:row; align-items:center; justify-content:space-between"
     >
       <div>
+        <!-- 現在地の座標表示 -->
         <h1>現在地:</h1>
         <p>
           {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
         </p>
         <div>
+          <!-- マップ上の座標表示 -->
           <h1>Map coordinates:</h1>
           <p>
             {{ mapCoordinates.lat }} Latitude,{{ mapCoordinates.lng }} Longitude
@@ -16,13 +19,21 @@
         </div>
       </div>
     </div>
+    <!-- Google Mapの実装 -->
     <GmapMap
       :center="myCoordinates"
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
       @dragend="handleDrag"
-    ></GmapMap>
+    >
+      <GmapMarker
+        :position="{ lat: 35.6471, lng: 139.7534 }"
+        :clickable="true"
+        :draggable="false"
+      ></GmapMarker>
+      ></GmapMap
+    >
   </div>
 </template>
 
@@ -35,7 +46,7 @@ export default {
         lat: 0,
         lng: 0,
       },
-      zoom: 7,
+      zoom: 10,
     };
   },
   created() {
