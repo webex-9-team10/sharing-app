@@ -1,4 +1,5 @@
 <template>
+<div class="show_wrapper">
   <div id="show">
     <div>photo :{{ item.photo }}</div>
     <div>genre :{{ item.genre }}</div>
@@ -8,6 +9,7 @@
     <post-display />
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
+</div>
 </template>
 
 
@@ -39,4 +41,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.show_wrapper{
+  box-shadow :0px 0px 3px silver;
+  border: solid 1px whitesmoke;
+  padding: 0.5em 1em 0.5em 2.3em;
+  position: relative;
+  background: #fafafa;
+}
+</style>
