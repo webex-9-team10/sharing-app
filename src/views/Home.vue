@@ -25,8 +25,8 @@
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
-      @dragend="handleDrag"
-      @click="getPosition(event)"
+      @dragend="handleDrag()"
+      @click="getPosition($event)"
     >
       <div v-for="marker in markers" :key="marker.id">
         <GmapMarker
@@ -100,32 +100,33 @@ export default {
       localStorage.zoom = zoom;
     },
     getPosition: function(event) {
+      console.log(event.latLng.lat());
       if (event) {
         this.markers.push({
           id: this.markers.length,
-          position: { lat: event.lat, lng: event.lng },
+          position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
     },
-    computed: {
-      mapCoordinates() {
-        if (!this.map) {
-          return {
-            lat: 0,
-            lng: 0,
-          };
-        }
+  },
+  computed: {
+    mapCoordinates() {
+      if (!this.map) {
         return {
-          lat: this.map
-            .getCenter()
-            .lat()
-            .toFixed(4),
-          lng: this.map
-            .getCenter()
-            .lng()
-            .toFixed(4),
+          lat: 0,
+          lng: 0,
         };
-      },
+      }
+      return {
+        lat: this.map
+          .getCenter()
+          .lat()
+          .toFixed(4),
+        lng: this.map
+          .getCenter()
+          .lng()
+          .toFixed(4),
+      };
     },
   },
 };
