@@ -28,12 +28,18 @@
       @dragend="handleDrag()"
       @click="getPosition($event)"
     >
+      <!-- クリックでマーカー表示 -->
       <div v-for="marker in markers" :key="marker.id">
         <GmapMarker
           :position="{ lat: marker.position.lat, lng: marker.position.lng }"
           :clickable="true"
           :draggable="false"
-        ></GmapMarker>
+        >
+          <!-- マーカー上のウィンドウ表示 -->
+          <gmap-info-window v-if="marker.infowindow">
+            <div @click="clickPin()">{{ marker.title }}</div>
+          </gmap-info-window>
+        </GmapMarker>
       </div>
       ></GmapMap
     >
@@ -99,14 +105,23 @@ export default {
       localStorage.center = JSON.stringify(center);
       localStorage.zoom = zoom;
     },
+    //クリックしたらマーカー表示されるように
     getPosition: function(event) {
       console.log(event.latLng.lat());
       if (event) {
         this.markers.push({
           id: this.markers.length,
+          title: "新規登録",
+          infowindow: true,
           position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
+    },
+    clickPin: function() {
+      this.$router.push({ path: `/show` });
+    },
+    showInfowindow: function(id) {
+      this.markers[id].infowindow = !this.markers[id].infowindow;
     },
   },
   computed: {
