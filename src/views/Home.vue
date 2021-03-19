@@ -25,6 +25,7 @@
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
+<<<<<<< HEAD
     >
         <GmapMarker
         :position="{lat: 35.6471, lng: 139.5534}"
@@ -32,6 +33,26 @@
         :draggable="false"
       ></GmapMarker>
     </GmapMap>
+=======
+      @dragend="handleDrag()"
+      @click="getPosition($event)"
+    >
+      <!-- クリックでマーカー表示 -->
+      <div v-for="marker in markers" :key="marker.id">
+        <GmapMarker
+          :position="{ lat: marker.position.lat, lng: marker.position.lng }"
+          :clickable="true"
+          :draggable="false"
+        >
+          <!-- マーカー上のウィンドウ表示 -->
+          <gmap-info-window v-if="marker.infowindow">
+            <div @click="clickPin()">{{ marker.title }}</div>
+          </gmap-info-window>
+        </GmapMarker>
+      </div>
+      ></GmapMap
+    >
+>>>>>>> f20ccaa00c25ba68ba0bbe3b03483e86997cbcb8
   </div>
 </template>
 
@@ -44,6 +65,20 @@ export default {
         lat: 0,
         lng: 0,
       },
+      markers: [
+        {
+          id: 0,
+          position: { lat: 35.649, lng: 139.7433 },
+        },
+        {
+          id: 1,
+          position: { lat: 35.6577, lng: 139.702 },
+        },
+        {
+          id: 2,
+          position: { lat: 35.6589, lng: 139.7459 },
+        },
+      ],
       zoom: 10,
     };
   },
@@ -79,6 +114,24 @@ export default {
 
       localStorage.center = JSON.stringify(center);
       localStorage.zoom = zoom;
+    },
+    //クリックしたらマーカー表示されるように
+    getPosition: function(event) {
+      console.log(event.latLng.lat());
+      if (event) {
+        this.markers.push({
+          id: this.markers.length,
+          title: "新規登録",
+          infowindow: true,
+          position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
+        });
+      }
+    },
+    clickPin: function() {
+      this.$router.push({ path: `/show` });
+    },
+    showInfowindow: function(id) {
+      this.markers[id].infowindow = !this.markers[id].infowindow;
     },
   },
   computed: {
