@@ -27,7 +27,7 @@
       placeholder="キャプションを書く"
     />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">
+      <button v-on:click="checkStatus" class="form__submit-button">
         投稿
       </button>
     </div>
@@ -75,6 +75,16 @@ export default {
             ...doc.data()
           });
         });
+      });
+    },
+    checkStatus: function(){
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          this.postTweet()
+         } else {
+          alert("ログインしてね")
+          //this.$router.push({ path: `/signup` })
+        }
       });
     },
   },

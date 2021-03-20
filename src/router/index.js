@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Post from '../views/Post.vue'
 import Show from '../views/Show.vue'
+import Signup from '../views/Signup.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     component: Show,
     props: route => ({ postid: String(route.params.postid) })
   },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
+  }
 ]
 
 const router = new VueRouter({
