@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from "firebase";
 
 export default {
   data() {

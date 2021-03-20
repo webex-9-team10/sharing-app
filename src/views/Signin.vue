@@ -9,7 +9,7 @@
           <h3>password</h3>
           <input type="text" placeholder="password" v-model="password" />
       </div>
-      <button @click="userSignIn">sign in</button>
+      <button v-on:click="userSignIn">sign in</button>
       <router-link :to="{ name: 'Signup' }" >
           新規登録はこちら
         </router-link >
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import firebase from "../firebase.js";
+import firebase from "firebase";
 export default {
     data:function(){
         return{
@@ -26,7 +26,7 @@ export default {
         }
     },
     methods: {
-        userSignin(){
+        userSignIn(){
             firebase
                 .auth()
                 .signInWithEmailAndPassword(this.email, this.password)

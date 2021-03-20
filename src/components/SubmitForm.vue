@@ -6,6 +6,7 @@
         </label> <span id="file_name" >sample.csv <span class="reset_file_ico">×</span></span>
         <p id="error">csv ファイルのみアップロード可能です</p>
     </div>
+    {{genre}}
     <select v-model="genre">
       <option disabled value="">ジャンルの選択</option>
       <option>food</option>
@@ -27,7 +28,7 @@
       placeholder="キャプションを書く"
     />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">
+      <button v-on:click="checkStatus" class="form__submit-button">
         投稿
       </button>
     </div>
@@ -41,6 +42,7 @@
 
 <script>
 import firebase from "firebase"
+import router from "../router"
 export default {
   data() {
     return {
@@ -53,43 +55,21 @@ export default {
     }
   },
   methods: {
-    postTweet() {
-      const item = {
-        genre:this.genre,
-        title:this.title,
-        text:this.text,
-        //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      }
-      firebase.firestore().collection("tweets").add(item)
-      this.tweets.length=0
-
-      firebase
-      .firestore()
-      .collection("tweets")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.tweets.push({
-            id: doc.id,
-            ...doc.data()
-          });
-        });
-      });
-    },
     checkStatus: function(){
       firebase.auth().onAuthStateChanged(function(user) {
         if (!user) {
           alert("ログインしてね")
-          this.$router.push({ path: `/` })
+          router.push({ name: `Signup` })
         } else{
+          console.log(this.genre)
           const item = {
-        genre:this.genre,
-        title:this.title,
-        text:this.text,
-        //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      }
+          genre:this.genre,
+          title:this.title,
+          text:this.text,
+          //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          userid:firebase.auth().currentUser.uid,
+        }
       firebase.firestore().collection("tweets").add(item)
       this.tweets.length=0
 
