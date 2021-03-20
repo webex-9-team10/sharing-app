@@ -9,6 +9,9 @@
           <input type="text" v-model="password">
       </div>
       <button v-on:click="signup()">signup</button>
+      <router-link :to="{ name: 'Signin' }" >
+          ログインページはこちら
+        </router-link >
   </div>
 </template>
 
@@ -26,8 +29,11 @@ export default {
         signup:function(){
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
             .then((user) => {
-                firebase.firestore().collection("users").doc(user.uid).add({email:this.email,password:this.password})
-                alert("ようこそ")
+                let uid=user.user.uid
+                firebase.firestore()
+                .collection("users")
+                .doc(uid)
+                .set({email:this.email,password:this.password})
                 this.$router.push({ path: `/` })
             })
             .catch((error) => {

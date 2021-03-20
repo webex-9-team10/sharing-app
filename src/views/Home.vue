@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button v-on:click="signout">sign out</button>
     <!-- 座標の表示  -->
     <div
       style=" flex-direction:row; align-items:center; justify-content:space-between"
@@ -41,6 +42,8 @@
 </template>
 
 <script>
+import firebase from "../firebase.js";
+
 export default {
   data() {
     return {
@@ -107,6 +110,14 @@ export default {
           position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
+    },
+    signout: function(){
+      firebase.auth().signOut().then(() => {
+        alert("ログアウトしました")
+        this.router.push("/");
+      }).catch((error) => {
+        console.log(error)
+      });
     },
   },
   computed: {

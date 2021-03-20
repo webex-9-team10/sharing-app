@@ -27,7 +27,7 @@
       placeholder="キャプションを書く"
     />
     <div class="form__buttons">
-      <button v-on:click="checkStatus" class="form__submit-button">
+      <button v-on:click="postTweet" class="form__submit-button">
         投稿
       </button>
     </div>
@@ -79,11 +79,32 @@ export default {
     },
     checkStatus: function(){
       firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          this.postTweet()
-         } else {
+        if (!user) {
           alert("ログインしてね")
-          //this.$router.push({ path: `/signup` })
+          this.$router.push({ path: `/` })
+        } else{
+          const item = {
+        genre:this.genre,
+        title:this.title,
+        text:this.text,
+        //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      }
+      firebase.firestore().collection("tweets").add(item)
+      this.tweets.length=0
+
+      firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+      });
         }
       });
     },
