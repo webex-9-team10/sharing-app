@@ -5,7 +5,6 @@
       <router-link to="/post">Post</router-link> |
       <router-link to="/show">Show</router-link>
     </div>
-
     <router-view />
   </div>
 </template>

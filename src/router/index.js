@@ -15,7 +15,11 @@ const routes = [
   {
     path: '/post',
     name: 'Post',
-    component: Post
+    component: Post,
+    props: route => ({
+       lat: Number(route.params.lat) ,
+       lng: Number(route.params.lng) 
+    })
   },
   {
     path: '/show/:postid',

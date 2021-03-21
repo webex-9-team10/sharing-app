@@ -1,5 +1,6 @@
 <template>
   <div class="form__wrapper">
+    {{position}}
     <div>
         <label>ファイルを選択
             <input type="file">
@@ -52,13 +53,14 @@ export default {
       tweets: [ ],
     }
   },
+  props:["position"],
   methods: {
     postTweet() {
       const item = {
         genre:this.genre,
         title:this.title,
         text:this.text,
-        //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
+        // position: { lat: this.position.lat, lng: this.position.lat },
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       }
       firebase.firestore().collection("tweets").add(item)

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button v-on:click="signout">sign out</button>
     <!-- 座標の表示  -->
     <div
       style=" flex-direction:row; align-items:center; justify-content:space-between"
@@ -25,15 +26,6 @@
       :zoom="zoom"
       style="width:640px;height:360px; margin:32px auto;"
       ref="mapRef"
-<<<<<<< HEAD
-    >
-        <GmapMarker
-        :position="{lat: 35.6471, lng: 139.5534}"
-        :clickable="true"
-        :draggable="false"
-      ></GmapMarker>
-    </GmapMap>
-=======
       @dragend="handleDrag()"
       @click="getPosition($event)"
     >
@@ -46,17 +38,18 @@
         >
           <!-- マーカー上のウィンドウ表示 -->
           <gmap-info-window v-if="marker.infowindow">
-            <div @click="clickPin()">{{ marker.title }}</div>
+            <div @click="clickPin(marker.id)">{{ marker.title }}</div>
           </gmap-info-window>
         </GmapMarker>
       </div>
       ></GmapMap
     >
->>>>>>> f20ccaa00c25ba68ba0bbe3b03483e86997cbcb8
   </div>
 </template>
 
 <script>
+import firebase from "firebase"
+
 export default {
   data() {
     return {
@@ -105,6 +98,13 @@ export default {
     this.$refs.mapRef.$mapPromise.then((map) => (this.map = map));
   },
   methods: {
+    signout: function(){
+      firebase.auth().signOut().then(() => {
+        alert("ログアウトしました")
+      }).catch((error) => {
+        console.log(error)
+      });
+    },
     handleDrag() {
       let center = {
         lat: this.map.getCenter().lat(),
@@ -117,7 +117,6 @@ export default {
     },
     //クリックしたらマーカー表示されるように
     getPosition: function(event) {
-      console.log(event.latLng.lat());
       if (event) {
         this.markers.push({
           id: this.markers.length,
@@ -126,9 +125,18 @@ export default {
           position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
+      console.log(event.latLng.lat() + " : " + event.latLng.lng());
     },
-    clickPin: function() {
-      this.$router.push({ path: `/show` });
+    clickPin: function(id) {
+      console.log(this.markers[id].position.lat * 1000000000000000);
+      this.$router.push(
+        { path: `/post`, 
+          params: {
+            lat : Number(this.markers[id].position.lat * 1000000000000),
+            lng : Number(this.markers[id].position.lng * 1000000000000)
+          } 
+        }
+      );
     },
     showInfowindow: function(id) {
       this.markers[id].infowindow = !this.markers[id].infowindow;
