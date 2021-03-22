@@ -59,8 +59,10 @@ export default {
         if (!user) {
           alert("ログインしてね")
           router.push({ name: `Signup` })
-        } else{
-        const item = {
+          return
+        }
+      });
+      const item = {
           genre:this.genre,
           title:this.title,
           text:this.text,
@@ -68,7 +70,7 @@ export default {
           //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           userid:firebase.auth().currentUser.uid,
-        }
+      }
       firebase.firestore().collection("tweets").add(item)
       this.tweets.length=0
 
@@ -83,8 +85,6 @@ export default {
             ...doc.data()
           });
         });
-      });
-        }
       });
     },
   },
