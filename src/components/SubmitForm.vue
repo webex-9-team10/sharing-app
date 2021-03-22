@@ -28,7 +28,7 @@
       placeholder="キャプションを書く"
     />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">
+      <button v-on:click="checkStatus" class="form__submit-button">
         投稿
       </button>
     </div>
@@ -41,7 +41,9 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase"
+import router from "../router"
+
 export default {
   data() {
     return {
@@ -59,19 +61,27 @@ export default {
   },
   props: ["position"],
   methods: {
-    postTweet() {
+    checkStatus: function(){
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (!user) {
+          alert("ログインしてね")
+          router.push({ name: `Signup` })
+          return
+        }
+      });
       const item = {
         genre: this.genre,
         title: this.title,
         text: this.text,
+        liked: 0,
         // position: { lat: this.position.lat, lng: this.position.lat },
         infowindow: false,
-        liked: 0,
         positionData: {
           lat: this.positionData.lat,
           lng: this.positionData.lng,
         },
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        userid:firebase.auth().currentUser.uid,
       };
       firebase
         .firestore()
