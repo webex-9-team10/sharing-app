@@ -2,14 +2,12 @@
   <div class="form__wrapper">
     {{ position }}
     <div>
-      <label
-        >ファイルを選択
-        <input type="file" />
-      </label>
-      <span id="file_name"
-        >sample.csv <span class="reset_file_ico">×</span></span
-      >
+      {{file.name}}
+      <label>ファイルを選択
+          <input v-on:change="changeFile()" ref="file" type="file">
+      </label> <span id="file_name">sample.csv <span class="reset_file_ico">×</span></span>
       <p id="error">csv ファイルのみアップロード可能です</p>
+      <button　v-on:click="saveImage()">保存する</button>
     </div>
     <select v-model="genre">
       <option disabled value="">ジャンルの選択</option>
@@ -49,7 +47,7 @@ export default {
       genre: "",
       title: "",
       text: "",
-      //position:{},
+      file:{},
       positionData: {
         lat: Number(this.position.lat),
         lng: Number(this.position.lng),
@@ -64,7 +62,6 @@ export default {
         genre: this.genre,
         title: this.title,
         text: this.text,
-        // position: { lat: this.position.lat, lng: this.position.lat },
         infowindow: false,
         liked: 0,
         positionData: {
@@ -80,6 +77,19 @@ export default {
 
       this.$router.push({ name: `Home` });
     },
+    changeFile:function(e){
+      const files = e.target.files || e.dataTransfer.files
+      this.file = false[0] 
+            },
+    saveImage:function(){
+      firebase
+        .storage()
+        .ref()
+        .child('images/' + this.file.name)
+        .put(this.file).then(function() {
+  console.log('Uploaded a blob or file!');
+});
+    }
   },
   mounted: function() {
     firebase
