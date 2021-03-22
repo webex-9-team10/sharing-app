@@ -1,6 +1,5 @@
 <template>
   <div class="form__wrapper">
-    {{position}}
     <div>
         <label>ファイルを選択
             <input type="file">
@@ -32,11 +31,6 @@
         投稿
       </button>
     </div>
-    <div v-for="tweet in tweets" :key="tweet.id">
-        <router-link :to="{ name: 'Show', params: { postid : tweet.id  }}" >
-            {{ tweet.text }}
-        </router-link >
-    </div>
   </div>
 </template>
 
@@ -49,7 +43,7 @@ export default {
       genre:"",
       title:"",
       text:"",
-      //position:{},
+      positionData: { lat: Number(this.position.lat), lng: Number(this.position.lng) },
       tweets: [ ],
     }
   },
@@ -60,24 +54,13 @@ export default {
         genre:this.genre,
         title:this.title,
         text:this.text,
-        // position: { lat: this.position.lat, lng: this.position.lat },
+        infowWindow:false,
+        liked: 0,
+        positionData: { lat: this.positionData.lat, lng: this.positionData.lng },
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       }
       firebase.firestore().collection("tweets").add(item)
-      this.tweets.length=0
-
-      firebase
-      .firestore()
-      .collection("tweets")
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          this.tweets.push({
-            id: doc.id,
-            ...doc.data()
-          });
-        });
-      });
+      this.$router.push({ name: `Home`});
     },
   },
   mounted: function(){

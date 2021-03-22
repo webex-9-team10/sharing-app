@@ -17,8 +17,8 @@ const routes = [
     name: 'Post',
     component: Post,
     props: route => ({
-       lat: Number(route.params.lat) ,
-       lng: Number(route.params.lng) 
+       lat: String(route.params.lat) ,
+       lng: String(route.params.lng) 
     })
   },
   {

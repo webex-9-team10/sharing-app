@@ -5,8 +5,10 @@
     <div>genre :{{ item.genre }}</div>
     <div>title :{{ item.title }}</div>
     <div>text :{{ item.text }}</div>
-    <div>position :{{ item.position }}</div>
-    <post-display />
+    <div>
+      liked :{{ item.liked }}    
+      <button v-on:click="like()">いいね</button>
+    </div>
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
 </div>
@@ -14,17 +16,29 @@
 
 
 <script>
-import PostDisplay from "../components/PostDisplay.vue"
 import firebase from "firebase"
 
 export default {
   data:function(){
     return{
-      item:{}
+      item:{},
+      likePushed:false
     }
   },
+  methods:{
+    like:function(){
+      console.log('111');
+      
+      if (this.likePushed) {
+        this.item.liked -= 1
+        this.likePushed = !this.likePushed
+      }else{
+        this.item.liked += 1
+        this.likePushed = !this.likePushed
+      }
+    },
+  },
   props: { postid: String },
-  components: { PostDisplay },
   mounted:function(){
     firebase
       .firestore()
@@ -33,10 +47,16 @@ export default {
       .get()
       .then(doc => {
         this.item = {
-          id: doc.id,
           ...doc.data()       
         }
       })
+  },
+  destroyed:function(){
+    firebase
+      .firestore()
+      .collection("tweets")
+      .doc(this.postid)
+      .set(this.item)
   }
 }
 </script>

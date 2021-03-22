@@ -1,7 +1,6 @@
 <template>
   <div class="home__wrapper">
     <submit-form v-bind:position="position"/>
-    {{ lat }}
   </div>
 </template>
 
@@ -12,15 +11,15 @@ export default {
   data:function(){
     return{
       position:{
-        lat:111,
-        lng:11111
+        lat:this.$route.params.lat,
+        lng:this.$route.params.lng
       }
     }
   },
   components: { SubmitForm },
   props:{
-    lat:Number,
-    lng:Number
+    lat:String,
+    lng:String
   },
 }
 </script>

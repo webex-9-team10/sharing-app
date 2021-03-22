@@ -32,12 +32,13 @@
       <!-- クリックでマーカー表示 -->
       <div v-for="marker in markers" :key="marker.id">
         <GmapMarker
-          :position="{ lat: marker.position.lat, lng: marker.position.lng }"
+          :position="{ lat: marker.positionData.lat, lng: marker.positionData.lng }"
           :clickable="true"
           :draggable="false"
+          v-on:click="showInfowindow(marker.id)"
         >
           <!-- マーカー上のウィンドウ表示 -->
-          <gmap-info-window v-if="marker.infowindow">
+          <gmap-info-window v-if="marker.infowWindow">
             <div @click="clickPin(marker.id)">{{ marker.title }}</div>
           </gmap-info-window>
         </GmapMarker>
@@ -58,20 +59,7 @@ export default {
         lat: 0,
         lng: 0,
       },
-      markers: [
-        {
-          id: 0,
-          position: { lat: 35.649, lng: 139.7433 },
-        },
-        {
-          id: 1,
-          position: { lat: 35.6577, lng: 139.702 },
-        },
-        {
-          id: 2,
-          position: { lat: 35.6589, lng: 139.7459 },
-        },
-      ],
+      markers: [],
       zoom: 10,
     };
   },
@@ -92,6 +80,21 @@ export default {
     if (localStorage.zoom) {
       this.zoom = parseInt(localStorage.zoom);
     }
+
+    // Fifebaseからデータを取得
+    firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then(snapshot => {
+        snapshot.docs.forEach(doc => {
+            this.markers.push({
+            id: this.markers.length,
+            postid: doc.id,
+            ...doc.data()
+          });
+      });
+    });
   },
   mounted() {
     //add the map to a data object
@@ -121,25 +124,34 @@ export default {
         this.markers.push({
           id: this.markers.length,
           title: "新規登録",
-          infowindow: true,
-          position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
+          infowWindow: true,
+          positionData: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
-      console.log(event.latLng.lat() + " : " + event.latLng.lng());
     },
     clickPin: function(id) {
-      console.log(this.markers[id].position.lat * 1000000000000000);
-      this.$router.push(
-        { path: `/post`, 
-          params: {
-            lat : Number(this.markers[id].position.lat * 1000000000000),
-            lng : Number(this.markers[id].position.lng * 1000000000000)
-          } 
-        }
-      );
+      if (this.markers[id].title === "新規登録") {
+        this.$router.push(
+          { 
+            name: `Post`, 
+            params: {
+              lat: this.markers[id].positionData.lat.toFixed(4),
+              lng: this.markers[id].positionData.lng.toFixed(4)
+            } 
+          }
+        );
+      } else {
+        this.$router.push(
+          { name: `Show`, 
+            params: {
+              postid: this.markers[id].postid,
+            } 
+          }
+        );
+      }
     },
-    showInfowindow: function(id) {
-      this.markers[id].infowindow = !this.markers[id].infowindow;
+    showInfowindow: function(id) {      
+      this.markers[id].infowWindow = !this.markers[id].infowWindow;
     },
   },
   computed: {
