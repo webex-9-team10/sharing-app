@@ -26,9 +26,7 @@ export default {
     }
   },
   methods:{
-    like:function(){
-      console.log('111');
-      
+    like:function(){      
       if (this.likePushed) {
         this.item.liked -= 1
         this.likePushed = !this.likePushed

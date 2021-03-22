@@ -63,6 +63,7 @@ export default {
       zoom: 10,
     };
   },
+  // ページ開いたとき
   created() {
     //does the user have a saved center?use it instead of the default
     if (localStorage.center) {
@@ -80,7 +81,6 @@ export default {
     if (localStorage.zoom) {
       this.zoom = parseInt(localStorage.zoom);
     }
-
     // Fifebaseからデータを取得
     firebase
       .firestore()
@@ -176,3 +176,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.Googlemap {
+  width: 100%;
+}
+</style>
