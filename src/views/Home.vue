@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Googlemap">
     <!-- 座標の表示  -->
     <div
       style=" flex-direction:row; align-items:center; justify-content:space-between"
@@ -31,13 +31,17 @@
       <!-- クリックでマーカー表示 -->
       <div v-for="marker in markers" :key="marker.id">
         <GmapMarker
-          :position="{ lat: marker.position.lat, lng: marker.position.lng }"
+          :position="{
+            lat: marker.positionData.lat,
+            lng: marker.positionData.lng,
+          }"
           :clickable="true"
           :draggable="false"
+          v-on:click="showInfowindow(marker.id)"
         >
           <!-- マーカー上のウィンドウ表示 -->
           <gmap-info-window v-if="marker.infowindow">
-            <div @click="clickPin()">{{ marker.title }}</div>
+            <div @click="clickPin(marker.id)">{{ marker.title }}</div>
           </gmap-info-window>
         </GmapMarker>
       </div>
@@ -47,6 +51,8 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
@@ -55,23 +61,13 @@ export default {
         lat: 0,
         lng: 0,
       },
-      markers: [
-        {
-          id: 0,
-          position: { lat: 35.649, lng: 139.7433 },
-        },
-        {
-          id: 1,
-          position: { lat: 35.6577, lng: 139.702 },
-        },
-        {
-          id: 2,
-          position: { lat: 35.6589, lng: 139.7459 },
-        },
-      ],
+      // 任意のピン位置設置
+      markers: [],
+      // マップの解像度
       zoom: 10,
     };
   },
+  // ページ開いたとき
   created() {
     //does the user have a saved center?use it instead of the default
     if (localStorage.center) {
@@ -89,6 +85,21 @@ export default {
     if (localStorage.zoom) {
       this.zoom = parseInt(localStorage.zoom);
     }
+    // 緯度経度をparms propsでhomeからpostに渡す
+    // Fifebaseからデータを取得
+    firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          this.markers.push({
+            id: this.markers.length,
+            postid: doc.id,
+            ...doc.data(),
+          });
+        });
+      });
   },
   mounted() {
     //add the map to a data object
@@ -105,6 +116,7 @@ export default {
       localStorage.center = JSON.stringify(center);
       localStorage.zoom = zoom;
     },
+
     //クリックしたらマーカー表示されるように
     getPosition: function(event) {
       console.log(event.latLng.lat());
@@ -113,12 +125,28 @@ export default {
           id: this.markers.length,
           title: "新規登録",
           infowindow: true,
-          position: { lat: event.latLng.lat(), lng: event.latLng.lng() },
+          positionData: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
     },
-    clickPin: function() {
-      this.$router.push({ path: `/show` });
+    // functionの()内に引数markerid入れることで使えるようになる
+    clickPin: function(id) {
+      if (this.markers[id].title === "新規登録") {
+        this.$router.push({
+          name: `Post`,
+          params: {
+            lat: this.markers[id].positionData.lat.toFixed(4),
+            lng: this.markers[id].positionData.lng.toFixed(4),
+          },
+        });
+      } else {
+        this.$router.push({
+          name: `Show`,
+          params: {
+            postid: this.markers[id].postid,
+          },
+        });
+      }
     },
     showInfowindow: function(id) {
       this.markers[id].infowindow = !this.markers[id].infowindow;
@@ -146,3 +174,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.Googlemap {
+  width: 100%;
+}
+</style>
