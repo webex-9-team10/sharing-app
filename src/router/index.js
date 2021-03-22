@@ -6,24 +6,28 @@ import Show from '../views/Show.vue'
 import Signup from '../views/Signup.vue'
 import Signin from '../views/Signin.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/post',
-    name: 'Post',
-    component: Post
+    path: "/post",
+    name: "Post",
+    component: Post,
+    props: (route) => ({
+      lat: String(route.params.lat),
+      lng: String(route.params.lng),
+    }),
   },
   {
-    path: '/show/:postid',
-    name: 'Show',
+    path: "/show/:postid",
+    name: "Show",
     component: Show,
-    props: route => ({ postid: String(route.params.postid) })
+    props: (route) => ({ postid: String(route.params.postid) }),
   },
   {
     path: '/signup',
@@ -38,9 +42,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
