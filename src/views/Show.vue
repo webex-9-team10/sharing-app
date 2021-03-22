@@ -6,6 +6,10 @@
     <div>title :{{ item.title }}</div>
     <div>text :{{ item.text }}</div>
     <div>position :{{ item.position }}</div>
+    <div>
+      liked:{{ item.liked }}
+      <button v-on:click="like()">♡</button>
+    </div>
     <post-display />
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
@@ -20,8 +24,20 @@ import firebase from "firebase"
 export default {
   data:function(){
     return{
-      item:{}
+      item:{},
+      likePushed:false
     }
+  },
+  methods:{
+    like:function(){
+      if(this.likePushed){
+        this.item.liked -= 1
+        this.likePushed = !this.likePushed
+      }else{
+        this.item.liked += 1
+        this.likePushed = !this.likePushed
+      }
+    },
   },
   props: { postid: String },
   components: { PostDisplay },

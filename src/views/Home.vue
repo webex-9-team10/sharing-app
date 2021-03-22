@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <button v-on:click="signout">sign out</button>
   <div class="Googlemap">
     <!-- 座標の表示  -->
     <div
@@ -129,6 +131,13 @@ export default {
         });
       }
     },
+    signout: function(){
+      firebase.auth().signOut().then(() => {
+        alert("ログアウトしました")
+        this.router.push("/");
+      }).catch((error) => {
+        console.log(error)
+      });
     // functionの()内に引数markerid入れることで使えるようになる
     clickPin: function(id) {
       if (this.markers[id].title === "新規登録") {
