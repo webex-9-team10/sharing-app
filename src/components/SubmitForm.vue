@@ -6,7 +6,6 @@
         </label> <span id="file_name" >sample.csv <span class="reset_file_ico">×</span></span>
         <p id="error">csv ファイルのみアップロード可能です</p>
     </div>
-    {{genre}}
     <select v-model="genre">
       <option disabled value="">ジャンルの選択</option>
       <option>food</option>
@@ -61,11 +60,11 @@ export default {
           alert("ログインしてね")
           router.push({ name: `Signup` })
         } else{
-          console.log(this.genre)
-          const item = {
+        const item = {
           genre:this.genre,
           title:this.title,
           text:this.text,
+          liked: 0,
           //position: { lat: this.latLng.lat(), lng: this.latLng.lng() },
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           userid:firebase.auth().currentUser.uid,
