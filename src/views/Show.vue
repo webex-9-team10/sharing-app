@@ -11,13 +11,8 @@
       <button v-on:click="like()">♡</button>
     </div>
     <post-display />
+    <ranking />
     <router-link :to="{ name: 'Home' }"> back </router-link>
-  </div>
-  <div>
-    <h1>ランキング</h1>
-    <div v-for="post in rankings" :key="post.id">
-
-    </div>
   </div>
 </div>
 </template>
@@ -25,6 +20,7 @@
 
 <script>
 import PostDisplay from "../components/PostDisplay.vue"
+import Ranking from "../views/Ranking.vue"
 import firebase from "firebase"
 
 export default {
@@ -46,7 +42,10 @@ export default {
     },
   },
   props: { postid: String },
-  components: { PostDisplay },
+  components: { 
+    PostDisplay,
+    Ranking
+     },
   mounted:function(){
     firebase
       .firestore()

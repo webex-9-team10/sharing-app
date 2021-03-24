@@ -1,5 +1,6 @@
 <template>
   <div>
+      <h1>新規登録</h1>
       <div>
           <div>email</div>
           <input type="text" v-model="email">

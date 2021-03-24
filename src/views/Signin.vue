@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1>sign in</h1>
+      <h1>ログイン</h1>
       <div>
           <h3>email</h3>
           <input type="text" placeholder="email" v-model="email" />
@@ -9,10 +9,13 @@
           <h3>password</h3>
           <input type="text" placeholder="password" v-model="password" />
       </div>
-      <button v-on:click="userSignIn">sign in</button>
-      <router-link :to="{ name: 'Signup' }" >
-          新規登録はこちら
-        </router-link >
+      <div>
+          <button v-on:click="userSignIn">sign in</button>
+      </div>
+      <div>
+          <router-link :to="{ name: 'Signup' }" >新規登録はこちら</router-link >
+      </div>
+
   </div>
 </template>
 
