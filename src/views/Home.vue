@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button v-on:click="signout">sign out</button>
+<div>
+  <button v-on:click="signout">sign out</button>
   <div class="Googlemap">
     <!-- 座標の表示  -->
     <div
@@ -50,6 +50,7 @@
       ></GmapMap
     >
   </div>
+</div>
 </template>
 
 <script>
@@ -138,6 +139,7 @@ export default {
       }).catch((error) => {
         console.log(error)
       });
+    },
     // functionの()内に引数markerid入れることで使えるようになる
     clickPin: function(id) {
       if (this.markers[id].title === "新規登録") {
@@ -159,7 +161,7 @@ export default {
     },
     showInfowindow: function(id) {
       this.markers[id].infowindow = !this.markers[id].infowindow;
-    },
+    }
   },
   computed: {
     mapCoordinates() {
