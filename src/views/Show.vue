@@ -13,6 +13,12 @@
     <post-display />
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
+  <div>
+    <h1>ランキング</h1>
+    <div v-for="post in rankings" :key="post.id">
+
+    </div>
+  </div>
 </div>
 </template>
 
