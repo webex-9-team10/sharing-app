@@ -63,12 +63,11 @@
       </div>
     </div>
   </section>
-
 </template>
 
 <script>
-import firebase from "firebase"
-import router from "../router"
+import firebase from "firebase";
+import router from "../router";
 
 export default {
   data() {
@@ -87,12 +86,12 @@ export default {
   },
   props: ["position"],
   methods: {
-    checkStatus: function(){
+    checkStatus: function() {
       firebase.auth().onAuthStateChanged(function(user) {
         if (!user) {
-          alert("ログインしてね")
-          router.push({ name: `Signup` })
-          return
+          alert("ログインしてね");
+          router.push({ name: `Signup` });
+          return;
         }
       });
       const item = {
@@ -107,7 +106,7 @@ export default {
           lng: this.positionData.lng,
         },
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        userid:firebase.auth().currentUser.uid,
+        userid: firebase.auth().currentUser.uid,
       };
       firebase
         .firestore()
@@ -141,7 +140,7 @@ body {
   height: 100vh;
 }
 
-#contact {
+.contact {
   width: 100%;
   height: 100vh;
   background-color: #000;
@@ -221,38 +220,6 @@ textarea.form-control {
   transform: translate3d(0px, -29px, 0px);
 }
 
-/* 以下、既存 */
-/* .form__wrapper {
-  font-family: "Nunito Sans", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #1c1b1b;
-  background: #fafafa;
-  line-height: 1.65;
-  box-sizing: border-box !important;
-  -webkit-font-smoothing: antialiased;
-} */
-/* .form__textarea {
-  font-family: "Nunito Sans", sans-serif;
-  width: 100%;
-  height: calc(1.3rem * 3 + 0.5rem * 2);
-  line-height: 1.3rem;
-  border-radius: 5px;
-  border: none;
-  resize: none;
-  justify-content: center;
-  padding: 0.5em 1em;
-  margin: 2em 0;
-  color: #fff;
-  background: #9ec34b;
-  border-bottom: solid 6px #dfe9e7;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
-  opacity: 0.9;
-}
-.form__textarea:focus {
-  outline: none;
-} */
 /* 投稿ボタン */
 .form__buttons {
   font-family: "Nunito Sans", sans-serif;
@@ -309,4 +276,3 @@ label input {
   color: #fff;
 }
 </style>
-
