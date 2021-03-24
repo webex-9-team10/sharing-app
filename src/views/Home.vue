@@ -1,6 +1,7 @@
 <template>
   <div>
     <button v-on:click="signout">sign out</button>
+  <div class="Googlemap">
     <!-- 座標の表示  -->
     <div
       style=" flex-direction:row; align-items:center; justify-content:space-between"
@@ -45,6 +46,7 @@
       </div>
       ></GmapMap
     >
+  </div>
   </div>
 </template>
 

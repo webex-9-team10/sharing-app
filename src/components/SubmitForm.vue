@@ -1,13 +1,10 @@
 <template>
   <div class="form__wrapper">
-    {{ position }}
     <div>
-      {{ file.name }}
-        <label>ファイルを選択
-            <input v-on:change="changeFile" ref="file" type="file">
-        </label> <span id="file_name" >sample.csv <span class="reset_file_ico">×</span></span>
-        <p id="error">csv ファイルのみアップロード可能です</p>
-        <button v-on:click="saveImage()">save</button>
+      <img v-bind:src="imagePath" alt="no image exist">
+      <label>ファイルを選択
+          <input v-on:change="changeFile" ref="file" type="file">
+      </label>
     </div>
     <select v-model="genre">
       <option disabled value="">ジャンルの選択</option>
@@ -26,7 +23,7 @@
       placeholder="キャプションを書く"
     />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">
+      <button v-on:click="checkStatus" class="form__submit-button">
         投稿
       </button>
     </div>
@@ -34,11 +31,14 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase"
+import router from "../router"
+
 export default {
   data() {
     return {
-      name: "FileInput",
+      name: "",
+      imagePath:"",
       genre:"",
       title:"",
       text:"",
@@ -49,32 +49,46 @@ export default {
   },
   props:["position"],
   methods: {
-    postTweet() {
+    checkStatus: function(){
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (!user) {
+          alert("ログインしてね")
+          router.push({ name: `Signup` })
+          return
+        }
+      });
+
+      const imagePathMaterial = firebase.auth().currentUser.uid + "/" + new Date() + "/" + this.file.name
+
       const item = {
         genre:this.genre,
         title:this.title,
         text:this.text,
         infowWindow:false,
         liked: 0,
+        imagePath: imagePathMaterial,
         positionData: { lat: this.positionData.lat, lng: this.positionData.lng },
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       }
-      firebase.firestore().collection("tweets").add(item)
+      firebase
+        .firestore()
+        .collection("tweets")
+        .add(item)
+        .then(() => {
+          this.saveImage(imagePathMaterial)
+        })
       this.$router.push({ name: `Home`});
     },
     changeFile:function(e){
       const files = e.target.files || e.dataTransfer.files
-      
       this.file = files[0]
     },
-    saveImage:function(){
+    saveImage:function(path){
       firebase
        .storage()
        .ref()
-       .child('images/' + this.file.name)
-       .put(this.file).then(function() {
-          console.log('Uploaded a blob or file!');
-      });
+       .child(path)
+       .put(this.file)
     }
   },
   mounted: function() {

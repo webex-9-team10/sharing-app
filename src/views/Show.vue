@@ -1,7 +1,7 @@
 <template>
 <div class="show_wrapper">
   <div id="show">
-    <div>photo :{{ item.photo }}</div>
+    <img :src="imagePath" alt="no image exists">
     <div>genre :{{ item.genre }}</div>
     <div>title :{{ item.title }}</div>
     <div>text :{{ item.text }}</div>
@@ -9,11 +9,24 @@
       liked :{{ item.liked }}    
       <button v-on:click="like()">いいね</button>
     </div>
+     <!-- Google Mapの実装 -->
+    <GmapMap
+      :center="{ lat: item.positionData.lat, lng: item.positionData.lng }"
+      :zoom="zoom"
+      style="width:640px;height:360px; margin:32px auto;"
+      ref="mapRef"
+    >
+      <!-- クリックでマーカー表示 -->
+        <GmapMarker
+          :position="{ lat: item.positionData.lat, lng: item.positionData.lng }"
+          :clickable="false"
+          :draggable="false"
+        ></GmapMarker>
+    </GmapMap>
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
 </div>
 </template>
-
 
 <script>
 import firebase from "firebase"
@@ -22,7 +35,9 @@ export default {
   data:function(){
     return{
       item:{},
-      likePushed:false
+      likePushed:false,
+      imagePath:"",
+      zoom:13
     }
   },
   methods:{
@@ -35,19 +50,41 @@ export default {
         this.likePushed = !this.likePushed
       }
     },
-  },
-  props: { postid: String },
-  mounted:function(){
-    firebase
+    getItem: async function(){
+      let self = this
+
+      await firebase
       .firestore()
       .collection("tweets")
       .doc(this.postid)
       .get()
       .then(doc => {
-        this.item = {
+        self.item = {
           ...doc.data()       
         }
+        this.getImages(doc.data().imagePath)
+      })    
+    },
+    getImages: async function(path){
+      let self = this
+
+      await firebase
+      .storage()
+      .ref()
+      .child(path)
+      .getDownloadURL()
+      .then(function(url) {
+        self.imagePath = url;
+        console.log(url);
       })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
+  },
+  props: { postid: String },
+  mounted:function(){
+    this.getItem()    
   },
   destroyed:function(){
     firebase
