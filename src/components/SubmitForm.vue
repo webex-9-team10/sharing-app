@@ -49,7 +49,7 @@
             </div>
             <!-- 投稿ボタン -->
             <div class="form__buttons">
-              <button v-on:click="postTweet" class="form__submit-button">
+              <button v-on:click="checkStatus" class="form__submit-button">
                 投稿
               </button>
             </div>
