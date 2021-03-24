@@ -1,8 +1,10 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Post from "../views/Post.vue";
-import Show from "../views/Show.vue";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+import Post from '../views/Post.vue'
+import Show from '../views/Show.vue'
+import Signup from '../views/Signup.vue'
+import Signin from '../views/Signin.vue'
 
 Vue.use(VueRouter);
 
@@ -27,13 +29,17 @@ const routes = [
     component: Show,
     props: (route) => ({ postid: String(route.params.postid) }),
   },
-  // {
-  //   path: " `/post`",
-  //   name: "Post",
-  //   component: () => import("../views/Home.vue"),
-  //   props: true,
-  // },
-];
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
+  },
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: Signin
+  }
+]
 
 const router = new VueRouter({
   mode: "history",
