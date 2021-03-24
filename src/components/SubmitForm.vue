@@ -76,7 +76,6 @@ export default {
       genre: "",
       title: "",
       text: "",
-      //position:{},
       positionData: {
         lat: Number(this.position.lat),
         lng: Number(this.position.lng),
@@ -99,7 +98,6 @@ export default {
         title: this.title,
         text: this.text,
         liked: 0,
-        // position: { lat: this.position.lat, lng: this.position.lat },
         infowindow: false,
         positionData: {
           lat: this.positionData.lat,

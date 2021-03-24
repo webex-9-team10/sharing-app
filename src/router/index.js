@@ -5,6 +5,7 @@ import Post from '../views/Post.vue'
 import Show from '../views/Show.vue'
 import Signup from '../views/Signup.vue'
 import Signin from '../views/Signin.vue'
+import Ranking from '../views/Ranking.vue'
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: Signin
+  },
+  {
+    path: '/ranking',
+    name: 'Ranking',
+    component: Ranking
   }
 ]
 
