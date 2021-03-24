@@ -27,6 +27,5 @@ export default {
 .home__wrapper {
   margin: 0 auto;
   max-width: 600px;
-  background-color: #fafafa;
 }
 </style>
