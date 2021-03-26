@@ -1,56 +1,58 @@
 <template>
-<div>
-  <button v-on:click="signout">sign out</button>
-  <div class="Googlemap">
-    <!-- 座標の表示  -->
-    <div
-      style=" flex-direction:row; align-items:center; justify-content:space-between"
-    >
-      <div>
-        <!-- 現在地の座標表示 -->
-        <h1>現在地:</h1>
-        <p>
-          {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
-        </p>
+  <div>
+    <button v-on:click="signout">sign out</button>
+
+    <div class="Googlemap">
+      <!-- 座標の表示  -->
+      <div
+        style=" flex-direction:row; align-items:center; justify-content:space-between"
+      >
         <div>
-          <!-- マップ上の座標表示 -->
-          <h1>Map coordinates:</h1>
+          <!-- 現在地の座標表示 -->
+          <h1>現在地:</h1>
           <p>
-            {{ mapCoordinates.lat }} Latitude,{{ mapCoordinates.lng }} Longitude
+            {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
           </p>
+          <div>
+            <!-- マップ上の座標表示 -->
+            <h1>Map coordinates:</h1>
+            <p>
+              {{ mapCoordinates.lat }} Latitude,{{ mapCoordinates.lng }}
+              Longitude
+            </p>
+          </div>
         </div>
       </div>
+      <!-- Google Mapの実装 -->
+      <GmapMap
+        :center="myCoordinates"
+        :zoom="zoom"
+        style="width:640px;height:360px; margin:32px auto;"
+        ref="mapRef"
+        @dragend="handleDrag()"
+        @click="getPosition($event)"
+      >
+        <!-- クリックでマーカー表示 -->
+        <div v-for="marker in markers" :key="marker.id">
+          <GmapMarker
+            :position="{
+              lat: marker.positionData.lat,
+              lng: marker.positionData.lng,
+            }"
+            :clickable="true"
+            :draggable="false"
+            v-on:click="showInfowindow(marker.id)"
+          >
+            <!-- マーカー上のウィンドウ表示 -->
+            <gmap-info-window v-if="marker.infowindow">
+              <div @click="clickPin(marker.id)">{{ marker.title }}</div>
+            </gmap-info-window>
+          </GmapMarker>
+        </div>
+        ></GmapMap
+      >
     </div>
-    <!-- Google Mapの実装 -->
-    <GmapMap
-      :center="myCoordinates"
-      :zoom="zoom"
-      style="width:640px;height:360px; margin:32px auto;"
-      ref="mapRef"
-      @dragend="handleDrag()"
-      @click="getPosition($event)"
-    >
-      <!-- クリックでマーカー表示 -->
-      <div v-for="marker in markers" :key="marker.id">
-        <GmapMarker
-          :position="{
-            lat: marker.positionData.lat,
-            lng: marker.positionData.lng,
-          }"
-          :clickable="true"
-          :draggable="false"
-          v-on:click="showInfowindow(marker.id)"
-        >
-          <!-- マーカー上のウィンドウ表示 -->
-          <gmap-info-window v-if="marker.infowindow">
-            <div @click="clickPin(marker.id)">{{ marker.title }}</div>
-          </gmap-info-window>
-        </GmapMarker>
-      </div>
-      ></GmapMap
-    >
   </div>
-</div>
 </template>
 
 <script>
@@ -132,13 +134,17 @@ export default {
         });
       }
     },
-    signout: function(){
-      firebase.auth().signOut().then(() => {
-        alert("ログアウトしました")
-        this.router.push("/");
-      }).catch((error) => {
-        console.log(error)
-      });
+    signout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert("ログアウトしました");
+          this.router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     // functionの()内に引数markerid入れることで使えるようになる
     clickPin: function(id) {
@@ -161,7 +167,7 @@ export default {
     },
     showInfowindow: function(id) {
       this.markers[id].infowindow = !this.markers[id].infowindow;
-    }
+    },
   },
   computed: {
     mapCoordinates() {
@@ -187,6 +193,11 @@ export default {
 </script>
 
 <style scoped>
+.body {
+  flex-direction: column;
+  display: block;
+}
+
 .Googlemap {
   width: 100%;
 }

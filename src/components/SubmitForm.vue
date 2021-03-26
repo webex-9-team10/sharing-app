@@ -50,7 +50,7 @@
             <!-- 投稿ボタン -->
             <div class="form__buttons">
               <button v-on:click="checkStatus" class="form__submit-button">
-                投稿
+                POST
               </button>
             </div>
             <div v-for="tweet in tweets" :key="tweet.id">
@@ -151,7 +151,7 @@ body {
   padding: 40px 0;
   font: 300 60px "Nunito Sans", sans-serif;
   letter-spacing: 6px;
-  color: #fff;
+  color: #5f6674;
 }
 
 .contact-wrapper {
@@ -166,7 +166,7 @@ body {
 .form-horizontal {
   text-align: center;
   flex-direction: column;
-  color: #fff;
+  color: #5f6674;
   font-family: "Lato";
 }
 
@@ -177,10 +177,15 @@ body {
   padding-left: 15px;
 }
 
+.onlyfile {
+  color: #5f6674;
+}
+
 textarea.form-control {
   width: 90%;
 
-  color: #fff;
+  color: #5f6674;
+
   letter-spacing: 1px;
   border: 1px solid #ccc;
   border-radius: 4px;
