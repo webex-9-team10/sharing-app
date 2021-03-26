@@ -1,68 +1,78 @@
 <template>
-  <section id="contact">
+  <form>
     <h1 class="section-header">Let's post!</h1>
-    <div class="form__wrapper">
-      <div class="contact-wrapper">
-        <form id="contact-form" class="form-horizontal" role="form">
-          <!-- 緯度経度の情報持ってくる -->
-          {{ position }}
-          <!-- ファイル選択画面 -->
-          <div class="form-group">
-            <div class="form-control">
-              <!-- ファイルを選択 -->
-              <div class="chooseFile">
-                <label
-                  >ファイルを選択
-                  <input type="file" />
-                </label>
-              </div>
-              <!-- ファイルのみアップロード可能です -->
-              <div class="onlyfile">
-                <span id="file_name"
-                  >sample.csv <span class="reset_file_ico">×</span></span
-                >
-                <p id="error">csv ファイルのみアップロード可能です</p>
-              </div>
-            </div>
-            <!-- ジャンル選択画面 -->
-            <div class="form-control">
-              <select v-model="genre">
-                <option disabled value="">ジャンルの選択</option>
-                <option>food</option>
-                <option>museum</option>
-                <option>date</option>
-                <option>chill</option>
-                <option>cafe</option>
-              </select>
-            </div>
-            <!-- タイトル選択画面 -->
-            <div class="chooseTitle">
-              <input type="text" v-model="title" placeholder="title" />
-            </div>
-            <!-- キャプション画面 -->
-            <div class="caption">
-              <textarea
-                class="form-control"
-                v-model="text"
-                placeholder="キャプションを書く"
-              />
-            </div>
-            <!-- 投稿ボタン -->
-            <div class="form__buttons">
-              <button v-on:click="checkStatus" class="form__submit-button">
-                POST
-              </button>
-            </div>
-            <div v-for="tweet in tweets" :key="tweet.id">
-              <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
-                {{ tweet.text }}
-              </router-link>
-            </div>
+    <div class="contact-wrapper">
+      <form id="contact-form" class="form-horizontal" role="form">
+        <!-- 緯度経度の情報持ってくる -->
+        {{ position }}
+        <!-- ファイル選択画面 -->
+
+        <div class="form-control">
+          <!-- ファイルを選択 -->
+          <div class="chooseFile">
+            <label
+              >ファイルを選択
+              <input type="file" />
+            </label>
           </div>
-        </form>
-      </div>
+          <!-- ファイルのみアップロード可能です -->
+          <div class="onlyfile">
+            <span id="file_name"
+              >sample.csv <span class="reset_file_ico">×</span></span
+            >
+            <p id="error">csv ファイルのみアップロード可能です</p>
+          </div>
+        </div>
+        <!-- ジャンル選択画面 -->
+
+        <select v-model="genre" class="genre">
+          <option disabled value="">ジャンルの選択</option>
+          <option>food</option>
+          <option>museum</option>
+          <option>date</option>
+          <option>chill</option>
+          <option>cafe</option>
+        </select>
+
+        <!-- タイトル選択画面 -->
+        <!-- <div class="chooseTitle">
+            <input type="text" v-model="title" placeholder="title" />
+          </div> -->
+        <input
+          name="title"
+          type="text"
+          class="feedback-input"
+          v-model="title"
+          placeholder="title"
+        />
+        <!-- キャプション画面 -->
+        <div class="caption">
+          <textarea
+            class="feedback-input"
+            v-model="text"
+            placeholder="キャプションを書く"
+          />
+        </div>
+        <!-- 投稿ボタン -->
+        <!-- <div class="form__buttons">
+                <button v-on:click="checkStatus" class="form__submit-button">
+                  POST
+                </button> -->
+        <input
+          type="submit"
+          value="SUBMIT"
+          v-on:click="checkStatus"
+          class="form__submit-button"
+        />
+        <!-- </div> -->
+        <div v-for="tweet in tweets" :key="tweet.id">
+          <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
+            {{ tweet.text }}
+          </router-link>
+        </div>
+      </form>
     </div>
-  </section>
+  </form>
 </template>
 
 <script>
@@ -132,7 +142,7 @@ export default {
 </script>
 
 <style scoped>
-body {
+/* body {
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -151,7 +161,7 @@ body {
   padding: 40px 0;
   font: 300 60px "Nunito Sans", sans-serif;
   letter-spacing: 6px;
-  color: #5f6674;
+  color: #5e5e5e;
 }
 
 .contact-wrapper {
@@ -160,13 +170,21 @@ body {
   position: relative;
   max-width: 800px;
   font-family: sans-serif;
+} */
+
+body {
+  background: rgb(30, 30, 40);
+}
+form {
+  max-width: 420px;
+  margin: 50px auto;
 }
 
 /* Begin Left Contact Page */
-.form-horizontal {
+/* .form-horizontal {
   text-align: center;
   flex-direction: column;
-  color: #5f6674;
+  color: #5e5e5e;
   font-family: "Lato";
 }
 
@@ -178,13 +196,13 @@ body {
 }
 
 .onlyfile {
-  color: #5f6674;
-}
+  color: #5e5e5e;
+} */
 
-textarea.form-control {
+/* textarea.form-control {
   width: 90%;
 
-  color: #5f6674;
+  color: #5e5e5e;
 
   letter-spacing: 1px;
   border: 1px solid #ccc;
@@ -196,8 +214,50 @@ textarea.form-control {
 
 .caption {
   padding: 10px 18px;
+} */
+
+/* キャプションを書く画面 始まり */
+.genre {
+  font-family: "FontAwesome", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 5px;
+  line-height: 7px;
+  background-color: transparent;
+  border: 2px solid #5e5e5e;
+  transition: all 0.3s;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 70%;
+  box-sizing: border-box;
+  outline: 0;
+}
+.feedback-input {
+  color: white;
+  font-family: "FontAwesome", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border: 2px solid #5e5e5e;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: 0;
 }
 
+.feedback-input:focus {
+  border: 2px solid #5e5e5e;
+}
+
+textarea {
+  height: 150px;
+  line-height: 150%;
+  resize: vertical;
+}
 .send-button {
   margin-top: 15px;
   height: 34px;
@@ -222,9 +282,10 @@ textarea.form-control {
 .button:hover {
   transform: translate3d(0px, -29px, 0px);
 }
+/* キャプションを書く画面 終わり */
 
 /* 投稿ボタン */
-.form__buttons {
+/* .form__buttons {
   font-family: "Nunito Sans", sans-serif;
   display: flex;
   justify-content: flex-end;
@@ -239,13 +300,36 @@ textarea.form-control {
   padding: 8px 16px;
   border-radius: 4px;
   transition: 0.4s;
-}
+} */
 /* ホバー時に色チェンジ */
-.form__buttons:hover {
+/* .form__buttons:hover {
   background-color: #9ec34b;
   border-color: #cbe585;
   color: #fff;
+} */
+
+/* 投稿ボタン  始まり*/
+[type="submit"] {
+  font-family: "FontAwesome", sans-serif;
+  width: 100%;
+  background: #42b983;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.3s;
+  margin-top: -4px;
+  font-weight: 700;
 }
+
+[type="submit"]:hover {
+  background: #cc4949;
+}
+/* 投稿ボタン 終わり */
+
 label {
   font-family: "Nunito Sans", sans-serif;
   font-size: 12px;
@@ -272,7 +356,7 @@ label input {
 }
 .reset_file_ico:hover {
   cursor: pointer;
-  border-color: #5f6674;
+  border-color: #5e5e5e;
 }
 #error {
   font-family: "Nunito Sans", sans-serif;

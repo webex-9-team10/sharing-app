@@ -20,7 +20,7 @@
   text-align: center;
   color: #818181;
   width: 100%;
-  height: 100vh;
+  height: 150vh;
   background-color: #fff;
 }
 
