@@ -39,10 +39,10 @@
           }"
           :clickable="true"
           :draggable="false"
-          v-on:click="showInfowindow(marker.id)"
+          v-on:click="showInfowWindow(marker.id)"
         >
           <!-- マーカー上のウィンドウ表示 -->
-          <gmap-info-window v-if="marker.infowindow">
+          <gmap-info-window v-if="marker.infowWindow">
             <div @click="clickPin(marker.id)">{{ marker.title }}</div>
           </gmap-info-window>
         </GmapMarker>
@@ -127,7 +127,7 @@ export default {
         this.markers.push({
           id: this.markers.length,
           title: "新規登録",
-          infowindow: true,
+          infowWindow: true,
           positionData: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
@@ -159,8 +159,8 @@ export default {
         });
       }
     },
-    showInfowindow: function(id) {
-      this.markers[id].infowindow = !this.markers[id].infowindow;
+    showInfowWindow: function(id) {
+      this.markers[id].infowWindow = !this.markers[id].infowWindow;
     }
   },
   computed: {

@@ -53,11 +53,6 @@
                 投稿
               </button>
             </div>
-            <div v-for="tweet in tweets" :key="tweet.id">
-              <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
-                {{ tweet.text }}
-              </router-link>
-            </div>
           </div>
         </form>
       </div>

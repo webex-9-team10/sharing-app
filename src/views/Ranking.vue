@@ -1,42 +1,13 @@
 <template>
 <div class="show_wrapper">
-  <div id="food">
-    <h1>food</h1>
+  <div v-for="genre in genre_array" v-bind:key="genre.id">
+    <h1>{{genre.text}}</h1>
     <div v-for="item in array" :key="item.id">
-      <div v-if="item.genre === `food`">
+      <div v-if="item.genre === genre.text">
+        <div v-on:click="ClickPage(item.id)">
         {{ item.title }} : {{ item.liked }}
-      </div>
-    </div>
-  </div>
-  <div id="date">
-    <h1>date</h1>
-    <div v-for="item in array" :key="item.id">
-      <div v-if="item.genre === `date`">
-        {{ item.title }} : {{ item.liked }}
-      </div>
-    </div>
-  </div>
-  <div id="cafe">
-    <h1>cafe</h1>
-    <div v-for="item in array" :key="item.id">
-      <div v-if="item.genre === `cafe`">
-        {{ item.title }} : {{ item.liked }}
-      </div>
-    </div>
-  </div>
-  <div id="chill">
-    <h1>chill</h1>
-    <div v-for="item in array" :key="item.id">
-      <div v-if="item.genre === `chill`">
-        {{ item.title }} : {{ item.liked }}
-      </div>
-    </div>
-  </div>
-  <div id="museum">
-    <h1>museum</h1>
-    <div v-for="item in array" :key="item.id">
-      <div v-if="item.genre === `museum`">
-        {{ item.title }} : {{ item.liked }}
+        </div>
+
       </div>
     </div>
   </div>
@@ -50,11 +21,29 @@ export default {
   data:function(){
     return{
      array:[],
-     food_array:[],
-     museum_array:[],
-     date_array:[],
-     chill_array:[],
-     cafe_array:[]
+     genre_array:[
+       {id:0,text:"food"},
+       {id:1,text:"date"},
+       {id:2,text:"cafe"},
+       {id:3,text:"chill"},
+       {id:4,text:"museum"}
+    ]
+    //  food_array:[],
+    //  museum_array:[],
+    //  date_array:[],
+    //  chill_array:[],
+    //  cafe_array:[]
+    }
+  },
+  methods:{
+    ClickPage: function(id){
+      console.log(this.array[id])
+      this.$router.push({
+          name: `Show`,
+          params: {
+            postid: this.array[id].postid,
+          },
+        });
     }
   },
   mounted:function(){
@@ -89,5 +78,6 @@ export default {
   padding: 0.5em 1em 0.5em 2.3em;
   position: relative;
   background: #fafafa;
+  font-family: "Open Sans", sans-serif;
 }
 </style>
