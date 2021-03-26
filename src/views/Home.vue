@@ -52,6 +52,34 @@
         ></GmapMap
       >
     </div>
+    <!-- Google Mapの実装 -->
+    <GmapMap
+      :center="myCoordinates"
+      :zoom="zoom"
+      style="width:640px;height:360px; margin:32px auto;"
+      ref="mapRef"
+      @dragend="handleDrag()"
+      @click="getPosition($event)"
+    >
+      <!-- クリックでマーカー表示 -->
+      <div v-for="marker in markers" :key="marker.id">
+        <GmapMarker
+          :position="{
+            lat: marker.positionData.lat,
+            lng: marker.positionData.lng,
+          }"
+          :clickable="true"
+          :draggable="false"
+          v-on:click="showInfowWindow(marker.id)"
+        >
+          <!-- マーカー上のウィンドウ表示 -->
+          <gmap-info-window v-if="marker.infowWindow">
+            <div @click="clickPin(marker.id)">{{ marker.title }}</div>
+          </gmap-info-window>
+        </GmapMarker>
+      </div>
+      ></GmapMap
+    >
   </div>
 </template>
 
@@ -129,7 +157,7 @@ export default {
         this.markers.push({
           id: this.markers.length,
           title: "新規登録",
-          infowindow: true,
+          infowWindow: true,
           positionData: { lat: event.latLng.lat(), lng: event.latLng.lng() },
         });
       }
@@ -165,9 +193,9 @@ export default {
         });
       }
     },
-    showInfowindow: function(id) {
-      this.markers[id].infowindow = !this.markers[id].infowindow;
-    },
+    showInfowWindow: function(id) {
+      this.markers[id].infowWindow = !this.markers[id].infowWindow;
+    }
   },
   computed: {
     mapCoordinates() {

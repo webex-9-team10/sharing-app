@@ -20,7 +20,6 @@
 
 <script>
 import PostDisplay from "../components/PostDisplay.vue"
-import Ranking from "../views/Ranking.vue"
 import firebase from "firebase"
 
 export default {
@@ -43,8 +42,7 @@ export default {
   },
   props: { postid: String },
   components: { 
-    PostDisplay,
-    Ranking
+    PostDisplay
      },
   mounted:function(){
     firebase

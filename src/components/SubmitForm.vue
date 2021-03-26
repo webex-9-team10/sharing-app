@@ -1,26 +1,58 @@
 <template>
   <form>
     <h1 class="section-header">Let's post!</h1>
-    <div class="contact-wrapper">
-      <form id="contact-form" class="form-horizontal" role="form">
-        <!-- 緯度経度の情報持ってくる -->
-        {{ position }}
-        <!-- ファイル選択画面 -->
-
-        <div class="form-control">
-          <!-- ファイルを選択 -->
-          <div class="chooseFile">
-            <label
-              >ファイルを選択
-              <input type="file" />
-            </label>
-          </div>
-          <!-- ファイルのみアップロード可能です -->
-          <div class="onlyfile">
-            <span id="file_name"
-              >sample.csv <span class="reset_file_ico">×</span></span
-            >
-            <p id="error">csv ファイルのみアップロード可能です</p>
+    <div class="form__wrapper">
+      <div class="contact-wrapper">
+        <form id="contact-form" class="form-horizontal" role="form">
+          <!-- 緯度経度の情報持ってくる -->
+          {{ position }}
+          <!-- ファイル選択画面 -->
+          <div class="form-group">
+            <div class="form-control">
+              <!-- ファイルを選択 -->
+              <div class="chooseFile">
+                <label
+                  >ファイルを選択
+                  <input type="file" />
+                </label>
+              </div>
+              <!-- ファイルのみアップロード可能です -->
+              <div class="onlyfile">
+                <span id="file_name"
+                  >sample.csv <span class="reset_file_ico">×</span></span
+                >
+                <p id="error">csv ファイルのみアップロード可能です</p>
+              </div>
+            </div>
+            <!-- ジャンル選択画面 -->
+            <div class="form-control">
+              <select v-model="genre">
+                <option disabled value="">ジャンルの選択</option>
+                <option>food</option>
+                <option>museum</option>
+                <option>date</option>
+                <option>chill</option>
+                <option>cafe</option>
+              </select>
+            </div>
+            <!-- タイトル選択画面 -->
+            <div class="chooseTitle">
+              <input type="text" v-model="title" placeholder="title" />
+            </div>
+            <!-- キャプション画面 -->
+            <div class="caption">
+              <textarea
+                class="form-control"
+                v-model="text"
+                placeholder="キャプションを書く"
+              />
+            </div>
+            <!-- 投稿ボタン -->
+            <div class="form__buttons">
+              <button v-on:click="checkStatus" class="form__submit-button">
+                投稿
+              </button>
+            </div>
           </div>
         </div>
         <!-- ジャンル選択画面 -->
