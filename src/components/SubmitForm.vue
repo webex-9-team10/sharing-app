@@ -176,7 +176,7 @@ body {
   background: rgb(30, 30, 40);
 }
 form {
-  max-width: 420px;
+  max-width: 630px;
   margin: 50px auto;
 }
 
@@ -220,20 +220,20 @@ form {
 .genre {
   font-family: "FontAwesome", sans-serif;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 13px;
   border-radius: 5px;
   line-height: 7px;
   background-color: transparent;
   border: 2px solid #5e5e5e;
   transition: all 0.3s;
-  padding: 10px;
+  padding: 11px;
   margin-bottom: 15px;
-  width: 70%;
+  width: 40%;
   box-sizing: border-box;
   outline: 0;
 }
 .feedback-input {
-  color: white;
+  color: rgb(12, 10, 10);
   font-family: "FontAwesome", sans-serif;
   font-weight: 500;
   font-size: 18px;
@@ -257,6 +257,7 @@ textarea {
   height: 150px;
   line-height: 150%;
   resize: vertical;
+  color: #5e5e5e;
 }
 .send-button {
   margin-top: 15px;
