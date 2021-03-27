@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button v-on:click="signout">sign out</button>
+    <header class="full">
+      <h1 class="h1">Share Your Favorites</h1>
+      <br />
+      <a>好きなものを気軽にshareしよう</a>
+    </header>
 
     <div class="Googlemap">
       <!-- 座標の表示  -->
@@ -23,35 +27,44 @@
           </div>
         </div>
       </div>
+      <!-- Google Mapの実装 -->
+      <GmapMap
+        :center="myCoordinates"
+        :zoom="zoom"
+        style="width:640px;height:360px; margin:32px auto;"
+        ref="mapRef"
+        @dragend="handleDrag()"
+        @click="getPosition($event)"
+      >
+        <!-- クリックでマーカー表示 -->
+        <div v-for="marker in markers" :key="marker.id">
+          <GmapMarker
+            :position="{
+              lat: marker.positionData.lat,
+              lng: marker.positionData.lng,
+            }"
+            :clickable="true"
+            :draggable="false"
+            v-on:click="showInfowWindow(marker.id)"
+          >
+            <!-- マーカー上のウィンドウ表示 -->
+            <gmap-info-window v-if="marker.infowWindow">
+              <div @click="clickPin(marker.id)">{{ marker.title }}</div>
+            </gmap-info-window>
+          </GmapMarker>
+        </div>
+        ></GmapMap
+      >
     </div>
-    <!-- Google Mapの実装 -->
-    <GmapMap
-      :center="myCoordinates"
-      :zoom="zoom"
-      style="width:640px;height:360px; margin:32px auto;"
-      ref="mapRef"
-      @dragend="handleDrag()"
-      @click="getPosition($event)"
-    >
-      <!-- クリックでマーカー表示 -->
-      <div v-for="marker in markers" :key="marker.id">
-        <GmapMarker
-          :position="{
-            lat: marker.positionData.lat,
-            lng: marker.positionData.lng,
-          }"
-          :clickable="true"
-          :draggable="false"
-          v-on:click="showInfowWindow(marker.id)"
-        >
-          <!-- マーカー上のウィンドウ表示 -->
-          <gmap-info-window v-if="marker.infowWindow">
-            <div @click="clickPin(marker.id)">{{ marker.title }}</div>
-          </gmap-info-window>
-        </GmapMarker>
-      </div>
-      ></GmapMap
-    >
+    <div class="button-panel">
+      <input
+        type="signout"
+        class="button"
+        title="Sign out"
+        value="Sign out"
+        v-on:click="signout"
+      />
+    </div>
   </div>
 </template>
 
@@ -167,7 +180,7 @@ export default {
     },
     showInfowWindow: function(id) {
       this.markers[id].infowWindow = !this.markers[id].infowWindow;
-    }
+    },
   },
   computed: {
     mapCoordinates() {
@@ -197,8 +210,38 @@ export default {
   flex-direction: column;
   display: block;
 }
-
+.full {
+  width: 100%;
+  min-height: 100vh;
+  background: url("https://beiz.jp/images_T/white/white_00116.jpg") center /
+    cover;
+  background-position: center;
+  font-family: "Open Sans", sans-serif;
+}
 .Googlemap {
   width: 100%;
+}
+.button-panel {
+  margin: 2em 0 0;
+  width: 100%;
+}
+
+.button-panel .button {
+  background: #42b983;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background 0.3s ease-in-out;
+  width: 30%;
+}
+
+.button:hover {
+  background: #ee3e52;
 }
 </style>
