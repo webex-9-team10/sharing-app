@@ -4,7 +4,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/Ranking">Ranking</router-link>
     </div>
-
     <router-view />
   </div>
 </template>
@@ -19,12 +18,13 @@
   text-align: center;
   color: #818181;
   width: 100%;
-  height: 150vh;
+  height: 250vh;
   background-color: #fff;
 }
 
 #nav {
   padding: 30px;
+  background-color: #fff;
 }
 
 #nav a {
