@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div>
     <h1 class="section-header">Let's post!</h1>
     <div class="form__wrapper">
       <div class="contact-wrapper">
@@ -58,13 +58,8 @@
         v-on:click="checkStatus"
         class="form__submit-button"
       />
-      <div v-for="tweet in tweets" :key="tweet.id">
-        <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
-          {{ tweet.text }}
-        </router-link>
-      </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>

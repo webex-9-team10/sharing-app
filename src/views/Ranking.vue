@@ -37,7 +37,7 @@ export default {
   },
   methods:{
     ClickPage: function(id){
-      console.log(this.array[id])
+      console.log(id)
       this.$router.push({
           name: `Show`,
           params: {
