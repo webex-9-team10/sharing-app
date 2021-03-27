@@ -1,11 +1,10 @@
 <template>
 <div class="show_wrapper">
   <div id="show">
-    <div>photo :{{ item.photo }}</div>
+    <img :src="imagePath" alt="no image exists">
     <div>genre :{{ item.genre }}</div>
     <div>title :{{ item.title }}</div>
     <div>text :{{ item.text }}</div>
-    <div>position :{{ item.position }}</div>
     <div>
       liked:{{ item.liked }}
       <button v-on:click="like()">♡</button>
@@ -26,7 +25,9 @@ export default {
   data:function(){
     return{
       item:[],
-      likePushed:false
+      likePushed:false,
+      imagePath:"",
+      zoom:13
     }
   },
   methods:{
@@ -39,6 +40,37 @@ export default {
         this.likePushed = !this.likePushed
       }
     },
+  },
+  getItem: async function(){
+    let self =this
+    
+    await firebase
+    .firestore()
+    .collection("tweets")
+    .doc(this.postid)
+    .get()
+      .then(doc => {
+        self.item = {
+          ...doc.data()       
+        }
+        this.getImages(doc.data().imagePath)
+      })    
+  },
+  getImages: async function(path){
+    let self =this
+
+    await firebase
+      .storage()
+      .ref()
+      .child(path)
+      .getDownloadURL()
+      .then(function(url) {
+        self.imagePath = url;
+        console.log(url);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
   props: { postid: String },
   components: { 
