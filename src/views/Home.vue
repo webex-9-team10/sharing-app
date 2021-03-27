@@ -1,22 +1,36 @@
 <template>
   <div>
     <header class="full">
-      <h1 class="h1">Share Your Favorites</h1>
-      <br />
-      <a>好きなものを気軽にshareしよう</a>
+      <div class="box">
+        <h1 class="h1">COM.</h1>
+      </div>
     </header>
+
+    <div class="explanation">
+      <h2 class="main-title">What is COM.?</h2>
+      <p class="text">Please share your favorite places.</p>
+      <p class="text2">いいなと思った場所を気軽に共有できるアプリです。</p>
+    </div>
+
+    <div class="explanation">
+      <h2 class="main-title">How to use?</h2>
+      <p class="text">地図上でシェアしたい場所をクリックしてください。</p>
+      <p class="text2">既存の投稿も地図上で確認できます。</p>
+    </div>
 
     <div class="Googlemap">
       <!-- 座標の表示  -->
       <div
         style=" flex-direction:row; align-items:center; justify-content:space-between"
       >
-        <div>
+        <div class="coordinates">
           <!-- 現在地の座標表示 -->
-          <h1>現在地:</h1>
-          <p>
-            {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
-          </p>
+          <div>
+            <h1>現在地:</h1>
+            <p>
+              {{ myCoordinates.lat }} Latitude,{{ myCoordinates.lng }} Longitude
+            </p>
+          </div>
           <div>
             <!-- マップ上の座標表示 -->
             <h1>Map coordinates:</h1>
@@ -210,17 +224,75 @@ export default {
   flex-direction: column;
   display: block;
 }
+/* header */
 .full {
   width: 100%;
   min-height: 100vh;
-  background: url("https://beiz.jp/images_T/white/white_00116.jpg") center /
-    cover;
+  background: url("https://wallpaperaccess.com/full/703897.jpg") center / cover;
   background-position: center;
   font-family: "Open Sans", sans-serif;
 }
+
+/* 写真内のCOM. */
+
+.h1 {
+  border: double 10px #fff;
+  opacity: 0.8;
+  margin: auto; /* サンプル用 中央寄せ  */
+  box-sizing: border-box; /* 罫線も含む長さ       */
+  width: 100%; /* BOXの幅              */
+  max-width: 300px; /* BOXの最大幅          */
+
+  padding: 18px; /* 文字の位置合わせ     */
+  font-size: 30px; /* 文字サイズ           */
+  text-align: center; /* 文字位置             */
+  color: #5e5e5e;
+  border: 12px double #ffffff; /* 枠線の指定           */
+  border-radius: 1px;
+  top: 50%;
+  font-family: "Bangers", cursive;
+}
+
+/* What is COM. */
+.main-title {
+  backface-visibility: hidden;
+  filter: blur(0px);
+  opacity: 1;
+  font-family: "Quicksand", sans-serif;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  backface-visibility: hidden;
+  font-size: 35px;
+  letter-spacing: 5px;
+  line-height: 42px;
+  margin-top: 150px;
+  margin-bottom: 30px;
+}
+/* 説明文1行目 */
+.text {
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 30px;
+  font-family: "Quicksand", sans-serif;
+}
+/* 説明文2行目 */
+.text2 {
+  margin-bottom: 140px;
+  font-size: 15px;
+  line-height: 30px;
+  font-family: "Quicksand", sans-serif;
+}
+/* 座標 */
+.coordinates {
+  justify-content: center;
+}
+/* googlemap */
 .Googlemap {
   width: 100%;
 }
+
+/* ログアウトボタン */
 .button-panel {
   margin: 2em 0 0;
   width: 100%;
