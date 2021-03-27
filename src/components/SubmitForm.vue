@@ -9,17 +9,12 @@
           <!-- ファイル選択画面 -->
           <div class="form-group">
             <div class="form-control">
-              <!-- ファイルを選択 -->
-              <div class="chooseFile">
-                <input type="file" name="file" placeholder="file" />
-              </div>
-              <!-- ファイルのみアップロード可能です -->
-              <div class="onlyfile">
-                <span id="file_name"
-                  >sample.csv <span class="reset_file_ico">×</span></span
-                >
-                <p id="error">csv ファイルのみアップロード可能です</p>
-              </div>
+             <div>
+              <img v-bind:src="imagePath" alt="no image exist">
+                <label>ファイルを選択
+                <input v-on:change="changeFile" ref="file" type="file">
+                </label>
+             </div>
             </div>
           </div>
         </form>
@@ -70,6 +65,7 @@ export default {
   data() {
     return {
       name: "FileInput",
+      imagePath:"",
       genre: "",
       title: "",
       text: "",
@@ -90,11 +86,15 @@ export default {
           return;
         }
       });
+
+      const imagePathMaterial = firebase.auth().currentUser.uid + "/" + new Date() + "/" + this.file.name
+
       const item = {
         genre: this.genre,
         title: this.title,
         text: this.text,
         liked: 0,
+        imagePath: imagePathMaterial,
         infowindow: false,
         positionData: {
           lat: this.positionData.lat,
@@ -106,10 +106,23 @@ export default {
       firebase
         .firestore()
         .collection("tweets")
-        .add(item);
-
-      this.$router.push({ name: `Home` });
+        .add(item)
+        .then(() => {
+          this.saveImage(imagePathMaterial)
+        })
+      this.$router.push({ name: `Home`});
     },
+    changeFile:function(e){
+      const files = e.target.files || e.dataTransfer.files
+      this.file = files[0]
+    },
+    saveImage:function(path){
+      firebase
+       .storage()
+       .ref()
+       .child(path)
+       .put(this.file)
+    }
   },
   mounted: function() {
     firebase
