@@ -25,7 +25,7 @@ import firebase from "firebase"
 export default {
   data:function(){
     return{
-      item:{},
+      item:[],
       likePushed:false
     }
   },

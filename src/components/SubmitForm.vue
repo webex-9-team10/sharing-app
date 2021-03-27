@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <div>
     <h1 class="section-header">Let's post!</h1>
     <div class="form__wrapper">
       <div class="contact-wrapper">
@@ -54,7 +54,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </form>
         <!-- ジャンル選択画面 -->
 
         <select v-model="genre" class="genre">
@@ -102,9 +102,9 @@
             {{ tweet.text }}
           </router-link>
         </div>
-      </form>
+      </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>

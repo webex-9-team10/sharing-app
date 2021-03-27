@@ -23,34 +23,6 @@
           </div>
         </div>
       </div>
-      <!-- Google Mapの実装 -->
-      <GmapMap
-        :center="myCoordinates"
-        :zoom="zoom"
-        style="width:640px;height:360px; margin:32px auto;"
-        ref="mapRef"
-        @dragend="handleDrag()"
-        @click="getPosition($event)"
-      >
-        <!-- クリックでマーカー表示 -->
-        <div v-for="marker in markers" :key="marker.id">
-          <GmapMarker
-            :position="{
-              lat: marker.positionData.lat,
-              lng: marker.positionData.lng,
-            }"
-            :clickable="true"
-            :draggable="false"
-            v-on:click="showInfowindow(marker.id)"
-          >
-            <!-- マーカー上のウィンドウ表示 -->
-            <gmap-info-window v-if="marker.infowindow">
-              <div @click="clickPin(marker.id)">{{ marker.title }}</div>
-            </gmap-info-window>
-          </GmapMarker>
-        </div>
-        ></GmapMap
-      >
     </div>
     <!-- Google Mapの実装 -->
     <GmapMap
