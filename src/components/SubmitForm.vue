@@ -11,10 +11,7 @@
             <div class="form-control">
               <!-- ファイルを選択 -->
               <div class="chooseFile">
-                <label
-                  >ファイルを選択
-                  <input type="file" />
-                </label>
+                <input type="file" name="file" placeholder="file" />
               </div>
               <!-- ファイルのみアップロード可能です -->
               <div class="onlyfile">
@@ -24,85 +21,48 @@
                 <p id="error">csv ファイルのみアップロード可能です</p>
               </div>
             </div>
-            <!-- ジャンル選択画面 -->
-            <div class="form-control">
-              <select v-model="genre">
-                <option disabled value="">ジャンルの選択</option>
-                <option>food</option>
-                <option>museum</option>
-                <option>date</option>
-                <option>chill</option>
-                <option>cafe</option>
-              </select>
-            </div>
-            <!-- タイトル選択画面 -->
-            <div class="chooseTitle">
-              <input type="text" v-model="title" placeholder="title" />
-            </div>
-            <!-- キャプション画面 -->
-            <div class="caption">
-              <textarea
-                class="form-control"
-                v-model="text"
-                placeholder="キャプションを書く"
-              />
-            </div>
-            <!-- 投稿ボタン -->
-            <div class="form__buttons">
-              <button v-on:click="checkStatus" class="form__submit-button">
-                投稿
-              </button>
-            </div>
           </div>
-        </div>
-        <!-- ジャンル選択画面 -->
+        </form>
+      </div>
+      <!-- ジャンル選択画面 -->
 
-        <select v-model="genre" class="genre">
-          <option disabled value="">ジャンルの選択</option>
-          <option>food</option>
-          <option>museum</option>
-          <option>date</option>
-          <option>chill</option>
-          <option>cafe</option>
-        </select>
+      <select v-model="genre" class="genre">
+        <option disabled value="">ジャンルの選択</option>
+        <option>food</option>
+        <option>museum</option>
+        <option>date</option>
+        <option>chill</option>
+        <option>cafe</option>
+      </select>
 
-        <!-- タイトル選択画面 -->
-        <!-- <div class="chooseTitle">
-            <input type="text" v-model="title" placeholder="title" />
-          </div> -->
-        <input
-          name="title"
-          type="text"
+      <!-- タイトル選択画面 -->
+      <input
+        name="title"
+        type="text"
+        class="feedback-input"
+        v-model="title"
+        placeholder="title"
+      />
+      <!-- キャプション画面 -->
+      <div class="caption">
+        <textarea
           class="feedback-input"
-          v-model="title"
-          placeholder="title"
+          v-model="text"
+          placeholder="キャプションを書く"
         />
-        <!-- キャプション画面 -->
-        <div class="caption">
-          <textarea
-            class="feedback-input"
-            v-model="text"
-            placeholder="キャプションを書く"
-          />
-        </div>
-        <!-- 投稿ボタン -->
-        <!-- <div class="form__buttons">
-                <button v-on:click="checkStatus" class="form__submit-button">
-                  POST
-                </button> -->
-        <input
-          type="submit"
-          value="SUBMIT"
-          v-on:click="checkStatus"
-          class="form__submit-button"
-        />
-        <!-- </div> -->
-        <div v-for="tweet in tweets" :key="tweet.id">
-          <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
-            {{ tweet.text }}
-          </router-link>
-        </div>
-      </form>
+      </div>
+      <!-- 投稿ボタン -->
+      <input
+        type="submit"
+        value="SUBMIT"
+        v-on:click="checkStatus"
+        class="form__submit-button"
+      />
+      <div v-for="tweet in tweets" :key="tweet.id">
+        <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
+          {{ tweet.text }}
+        </router-link>
+      </div>
     </div>
   </form>
 </template>
@@ -174,42 +134,14 @@ export default {
 </script>
 
 <style scoped>
-/* body {
-  margin: 0;
+.section-header {
+  text-align: center;
+  margin: 0 auto;
   padding: 0;
-  height: 100vh;
-}
-
-.contact {
-  width: 100%;
-  height: 100vh;
-  background-color: #000;
-  overflow: hidden;
-}
-
-.section-header {
-  text-align: center;
-  margin: 0 auto;
-  padding: 40px 0;
-  font: 300 60px "Nunito Sans", sans-serif;
-  letter-spacing: 6px;
-  color: #5e5e5e;
-}
-
-.contact-wrapper {
-  margin: 0 auto;
-  padding-top: 20px;
-  position: relative;
-  max-width: 800px;
-  font-family: sans-serif;
-} */
-.section-header {
-  text-align: center;
-  margin: 0 auto;
-  padding: 40px 0;
   font: 300 60px "Open Sans", sans-serif;
   letter-spacing: 6px;
   color: #5e5e5e;
+  border-bottom: solid 3px #5e5e5e;
 }
 
 body {
@@ -219,54 +151,36 @@ form {
   max-width: 630px;
   margin: 50px auto;
 }
-
-/* Begin Left Contact Page */
-/* .form-horizontal {
-  text-align: center;
-  flex-direction: column;
-  color: #5e5e5e;
-  font-family: "Lato";
+#contact-form {
+  padding-top: 10px;
 }
-
 .chooseFile {
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border: 2px solid #5e5e5e;
+  transition: all 0.3s;
+  padding: 7px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: 0;
 }
-
-.onlyfile {
-  color: #5e5e5e;
-} */
-
-/* textarea.form-control {
-  width: 90%;
-
-  color: #5e5e5e;
-
-  letter-spacing: 1px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 50px;
-  padding: 12px 12px;
-  font-size: 14px;
-}
-
-.caption {
-  padding: 10px 18px;
-} */
-
 /* キャプションを書く画面 始まり */
 .genre {
   font-family: "FontAwesome", sans-serif;
   font-weight: 500;
   font-size: 13px;
   border-radius: 5px;
-  line-height: 7px;
+  line-height: 8px;
   background-color: transparent;
   border: 2px solid #5e5e5e;
   transition: all 0.3s;
-  padding: 11px;
+  padding: 12px;
   margin-bottom: 15px;
   width: 40%;
   box-sizing: border-box;
@@ -325,33 +239,9 @@ textarea {
 }
 /* キャプションを書く画面 終わり */
 
-/* 投稿ボタン */
-/* .form__buttons {
-  font-family: "Nunito Sans", sans-serif;
-  display: flex;
-  justify-content: flex-end;
-  display: inline-block;
-  max-width: 180px;
-  text-align: left;
-  border: 2px solid white;
-  font-size: 16px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: 0.4s;
-} */
-/* ホバー時に色チェンジ */
-/* .form__buttons:hover {
-  background-color: #9ec34b;
-  border-color: #cbe585;
-  color: #fff;
-} */
-
 /* 投稿ボタン  始まり*/
 [type="submit"] {
-  font-family: "FontAwesome", sans-serif;
+  font-family: "Open Sans", sans-serif;
   width: 100%;
   background: #42b983;
   border-radius: 5px;
@@ -371,9 +261,8 @@ textarea {
 }
 /* 投稿ボタン 終わり */
 
-label {
-  font-family: "Nunito Sans", sans-serif;
-  font-size: 12px;
+/* label {
+  font-family: "Open Sans", sans-serif;
   padding: 2px 3px;
   border: 1px solid #c6c6c6;
 }
@@ -383,24 +272,15 @@ label:hover {
 }
 label input {
   display: none;
-}
+} */
 #file_name {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   margin-left: 20px;
 }
-.reset_file_ico {
-  padding: 4px;
-  font-size: 12px;
-  border: 1px solid #c6c6c6;
-  border-radius: 10px;
-}
-.reset_file_ico:hover {
-  cursor: pointer;
-  border-color: #5e5e5e;
-}
+
 #error {
-  font-family: "Nunito Sans", sans-serif;
-  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  color: #5e5e5e;
 }
 </style>
