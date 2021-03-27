@@ -11,6 +11,7 @@
       <button v-on:click="like()">♡</button>
     </div>
     <post-display />
+    <ranking />
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
 </div>
@@ -24,7 +25,7 @@ import firebase from "firebase"
 export default {
   data:function(){
     return{
-      item:{},
+      item:[],
       likePushed:false
     }
   },
@@ -40,7 +41,9 @@ export default {
     },
   },
   props: { postid: String },
-  components: { PostDisplay },
+  components: { 
+    PostDisplay
+     },
   mounted:function(){
     firebase
       .firestore()

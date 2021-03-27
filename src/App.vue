@@ -2,10 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/post">Post</router-link> |
-      <router-link to="/show">Show</router-link>
+      <router-link to="/Ranking">Ranking</router-link>
     </div>
-
     <router-view />
   </div>
 </template>
@@ -19,10 +17,14 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #818181;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 }
 
 #nav {
   padding: 30px;
+  background-color: #fff;
 }
 
 #nav a {
