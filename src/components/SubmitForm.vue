@@ -254,6 +254,7 @@ textarea {
   transition: all 0.3s;
   margin-top: -4px;
   font-weight: 700;
+  margin-bottom: 40px;
 }
 
 [type="submit"]:hover {
