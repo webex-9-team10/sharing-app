@@ -171,6 +171,14 @@ export default {
   max-width: 800px;
   font-family: sans-serif;
 } */
+.section-header {
+  text-align: center;
+  margin: 0 auto;
+  padding: 40px 0;
+  font: 300 60px "Open Sans", sans-serif;
+  letter-spacing: 6px;
+  color: #5e5e5e;
+}
 
 body {
   background: rgb(30, 30, 40);
@@ -234,7 +242,7 @@ form {
 }
 .feedback-input {
   color: rgb(12, 10, 10);
-  font-family: "FontAwesome", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 500;
   font-size: 18px;
   border-radius: 5px;
