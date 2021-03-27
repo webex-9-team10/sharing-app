@@ -58,11 +58,6 @@
         v-on:click="checkStatus"
         class="form__submit-button"
       />
-      <div v-for="tweet in tweets" :key="tweet.id">
-        <router-link :to="{ name: 'Show', params: { postid: tweet.id } }">
-          {{ tweet.text }}
-        </router-link>
-      </div>
     </div>
   </div>
 </template>
