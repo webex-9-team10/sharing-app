@@ -69,6 +69,7 @@ export default {
       genre: "",
       title: "",
       text: "",
+      file:{},
       positionData: {
         lat: Number(this.position.lat),
         lng: Number(this.position.lng),
@@ -114,14 +115,17 @@ export default {
     },
     changeFile:function(e){
       const files = e.target.files || e.dataTransfer.files
-      this.file = files[0]
-    },
-    saveImage:function(path){
+      this.file = false[0] 
+            },
+    saveImage:function(){
       firebase
-       .storage()
-       .ref()
-       .child(path)
-       .put(this.file)
+        .storage()
+        .ref()
+        .child('images/' + this.file.name)
+        .put(this.file).then(function() {
+  console.log('Uploaded a blob or file!');
+});
+
     }
   },
   mounted: function() {
