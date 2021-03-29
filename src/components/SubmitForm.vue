@@ -10,7 +10,7 @@
           <div class="form-group">
             <div class="form-control">
              <div>
-              <img v-bind:src="imagePath" alt="no image exist">
+                <!-- <img v-bind:src="imagePath" alt="no image exist"> -->
                 <label>ファイルを選択
                 <input v-on:change="changeFile" ref="file" type="file">
                 </label>

@@ -2,8 +2,8 @@
 <div class="show_wrapper">
   <div id="show">
     <img v-bind:src="imagePath" alt="no image exists">
-    <div>genre :{{ item.imagePath }}</div>
-    <div>title :{{ item.title }}</div>
+    <div>genre :{{ item.genre }}</div>
+    <div>title :{{ item.title }}</div> 
     <div>text :{{ item.text }}</div>
     <div>
       liked:{{ item.liked }}
