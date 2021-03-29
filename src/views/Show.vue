@@ -1,15 +1,14 @@
 <template>
 <div class="show_wrapper">
   <div id="show">
-    <img :src="imagePath" alt="no image exists">
-    <div>genre :{{ item.genre }}</div>
+    <img v-bind:src="imagePath" alt="no image exists">
+    <div>genre :{{ item.imagePath }}</div>
     <div>title :{{ item.title }}</div>
     <div>text :{{ item.text }}</div>
     <div>
       liked:{{ item.liked }}
       <button v-on:click="like()">♡</button>
     </div>
-    <post-display />
     <ranking />
     <router-link :to="{ name: 'Home' }"> back </router-link>
   </div>
@@ -18,8 +17,9 @@
 
 
 <script>
-import PostDisplay from "../components/PostDisplay.vue"
+import Ranking from "../views/Ranking.vue"
 import firebase from "firebase"
+
 
 export default {
   data:function(){
@@ -74,10 +74,15 @@ export default {
   },
   props: { postid: String },
   components: { 
-    PostDisplay
+    Ranking
      },
-  mounted:function(){
-    firebase
+  mounted: async function(){
+    const storage = firebase.storage();
+    const pathReference = storage.ref();
+    let self = this;
+    console.log(pathReference)
+
+     firebase
       .firestore()
       .collection("tweets")
       .doc(this.postid)
@@ -87,7 +92,17 @@ export default {
           id: doc.id,
           ...doc.data()       
         }
-      })
+    pathReference.child(this.item.imagePath)
+    .getDownloadURL()
+    .then(function(url){
+          self.imagePath = url;
+          console.log(url);})
+    .catch(function(error) {
+      console.log(error)
+
+});
+      });
+    
   }
 }
 </script>
