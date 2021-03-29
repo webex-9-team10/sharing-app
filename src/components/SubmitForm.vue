@@ -115,7 +115,7 @@ export default {
     },
     changeFile:function(e){
       const files = e.target.files || e.dataTransfer.files
-      this.file = false[0] 
+      this.file = files[0] 
             },
     saveImage:function(){
       firebase
