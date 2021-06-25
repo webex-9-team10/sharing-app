@@ -80,13 +80,13 @@ export default {
   props: ["position"],
   methods: {
     checkStatus: function() {
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (!user) {
-          alert("ログインしてね");
-          router.push({ name: `Signup` });
-          return;
-        }
-      });
+       firebase.auth().onAuthStateChanged(function(user) {
+         if (!user) {
+           alert("ログインしてね");
+           router.push({ name: `Signup` });
+           return;
+         }
+       });
 
       const imagePathMaterial = firebase.auth().currentUser.uid + "/" + new Date() + "/" + this.file.name
 
@@ -117,11 +117,11 @@ export default {
       const files = e.target.files || e.dataTransfer.files
       this.file = files[0] 
             },
-    saveImage:function(){
+    saveImage:function(path){
       firebase
         .storage()
         .ref()
-        .child('images/' + this.file.name)
+        .child(path)
         .put(this.file).then(function() {
   console.log('Uploaded a blob or file!');
 });

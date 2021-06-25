@@ -1,7 +1,6 @@
 <template>
   <div class="form-wrapper">
     <h1>Sign in</h1>
-    <form>
       <div class="form-item">
         <label for="email"></label>
         <input
@@ -29,8 +28,7 @@
         <router-link :to="{ name: 'Signup' }">新規登録はこちら</router-link>
       </div> -->
       <div class="button-panel">
-        <input
-          type="submit"
+        <button
           v-on:click="userSignIn"
           class="button"
           title="Sign In"
@@ -42,7 +40,6 @@
           <router-link :to="{ name: 'Signup' }">Create an account</router-link>
         </p>
       </div>
-    </form>
   </div>
 </template>
 

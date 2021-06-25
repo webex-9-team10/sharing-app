@@ -17,7 +17,6 @@
 
 
 <script>
-import Ranking from "../views/Ranking.vue"
 import firebase from "firebase"
 
 
@@ -74,9 +73,6 @@ export default {
       });
   },
   props: { postid: String },
-  components: { 
-    Ranking
-     },
   mounted: async function(){
     const storage = firebase.storage();
     const pathReference = storage.ref();
